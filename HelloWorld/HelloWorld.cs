@@ -1,12 +1,44 @@
 ﻿using System;
 
-namespace HelloWorld
+public class Questions
 {
-    class Program
+    public static void Main(string[] args)
     {
-        static void Random(string[] args)
+        string name = "";
+        int age;
+        int currentYear;
+        string favoriteAnimal = "";
+        string havePets = "";
+        string pet = "";
+        int numberOfPets = 0;
+
+        Console.WriteLine("Please enter your name: ");
+        name = Console.ReadLine();
+        Console.WriteLine("Please enter your age: ");
+        age = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Please enter the current year: ");
+        currentYear = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("What is your favorite animal?");
+        favoriteAnimal = Console.ReadLine().ToLower();
+        Console.WriteLine("Do you have any pets? Y/N");
+        havePets = Console.ReadLine().ToUpper();
+        if (havePets == "Y")
         {
-            Console.WriteLine("Hello, Wes!");
+            Console.WriteLine("Please enter one type of pet you have: ");
+            pet = Console.ReadLine().ToLower();
+            Console.WriteLine("Please enter number of {0}(s) you have: ", pet);
+            numberOfPets = Convert.ToInt32(Console.ReadLine());
+        }
+
+
+        Console.WriteLine("Hello! My name is {0} and I am {1} years old. I was born in {2}.", name, age, currentYear-age);
+        if (havePets == "Y")
+        {
+            Console.WriteLine("My favorite type of animal is a {0}. I have {1} {2}(s).",favoriteAnimal, numberOfPets, pet);
+        }
+        else 
+        {
+            Console.WriteLine("My favorite type of animal is a {0}. I have no pets.",favoriteAnimal);
         }
     }
 }
