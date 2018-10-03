@@ -20,9 +20,9 @@ public class Questions
         currentYear = Convert.ToInt32(Console.ReadLine());
         Console.WriteLine("What is your favorite animal?");
         favoriteAnimal = Console.ReadLine().ToLower();
-        Console.WriteLine("Do you have any pets? Y/N");
+        Console.WriteLine("Do you have any pets? Enter Y for Yes and N for No");
         havePets = Console.ReadLine().ToUpper();
-        if (havePets == "Y")
+        if (havePets == "Y" || havePets == "YES")
         {
             Console.WriteLine("Please enter one type of pet you have: ");
             pet = Console.ReadLine().ToLower();
@@ -32,13 +32,13 @@ public class Questions
 
 
         Console.WriteLine("Hello! My name is {0} and I am {1} years old. I was born in {2}.", name, age, currentYear-age);
-        if (havePets == "Y")
+        if (havePets == "Y" || havePets == "YES")
         {
             Console.WriteLine("My favorite type of animal is a {0}. I have {1} {2}(s).",favoriteAnimal, numberOfPets, pet);
         }
         else 
         {
-            Console.WriteLine("My favorite type of animal is a {0}. I have no pets.",favoriteAnimal);
+            Console.WriteLine("My favorite type of animal is a {0}. I do not have any pets.",favoriteAnimal);
         }
     }
 }
