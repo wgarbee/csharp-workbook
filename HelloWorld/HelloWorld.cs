@@ -6,7 +6,7 @@ public class Questions
     {
         string name = "";
         int age;
-        int currentYear;
+        int currentYear = DateTime.Now.Year;
         string favoriteAnimal = "";
         string havePets = "";
         string pet = "";
@@ -16,8 +16,6 @@ public class Questions
         name = Console.ReadLine();
         Console.WriteLine("Please enter your age: ");
         age = Convert.ToInt32(Console.ReadLine());
-        Console.WriteLine("Please enter the current year: ");
-        currentYear = Convert.ToInt32(Console.ReadLine());
         Console.WriteLine("What is your favorite animal?");
         favoriteAnimal = Console.ReadLine().ToLower();
         Console.WriteLine("Do you have any pets? Enter Y for Yes and N for No");
@@ -29,7 +27,6 @@ public class Questions
             Console.WriteLine("Please enter number of {0}(s) you have: ", pet);
             numberOfPets = Convert.ToInt32(Console.ReadLine());
         }
-
 
         Console.WriteLine("Hello! My name is {0} and I am {1} years old. I was born in {2}.", name, age, currentYear-age);
         if (havePets == "Y" || havePets == "YES")
