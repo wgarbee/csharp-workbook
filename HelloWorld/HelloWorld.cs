@@ -5,7 +5,7 @@ public class Questions
     public static void Main(string[] args)
     {
         string name = "";
-        int age;
+        int age = 0;
         int currentYear = DateTime.Now.Year;
         string favoriteAnimal = "";
         string havePets = "";
