@@ -24,7 +24,6 @@ namespace PigLatin
 
                 Console.WriteLine("Your translated word is {0}", word);
 
-                // leave this command at the end so your program does not close automatically
                 word = Console.ReadLine();
             }
         }
