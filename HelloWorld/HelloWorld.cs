@@ -37,5 +37,7 @@ public class Questions
         {
             Console.WriteLine("My favorite type of animal is a {0}. I do not have any pets.",favoriteAnimal);
         }
+
+        Console.ReadLine();
     }
 }
