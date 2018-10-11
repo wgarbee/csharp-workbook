@@ -10,12 +10,12 @@ namespace PigLatin
             String word = "";
 
             Console.Clear();
-            Thread.Sleep(2000);
             
             Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             Console.WriteLine("Elcomeway otay ethay igpay atinlay anslatortray!");
             Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             Console.WriteLine("Please enter a word to translate");
+            Thread.Sleep(500);
             word = Console.ReadLine();
 
             while (word.ToUpper() != "QUIT")
@@ -39,7 +39,7 @@ namespace PigLatin
 
             if (firstVowelLocation < 0)
             {
-                word = word + "yay";
+                word += "yay";
             }
             else if (firstVowelLocation == 0)
             {
@@ -47,7 +47,7 @@ namespace PigLatin
 
                 if (firstVowel.ToUpper() != "Y")
                 {
-                    word = word + "yay";
+                    word += "yay";
                 }
                 else
                 {
