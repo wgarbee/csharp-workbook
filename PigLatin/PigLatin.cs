@@ -18,7 +18,7 @@ namespace PigLatin
             Console.WriteLine("Please enter a word to translate");
             word = Console.ReadLine();
 
-            while (word != "QUIT")
+            while (word.ToUpper() != "QUIT")
             {
                 word = TranslateWord(word);
 
@@ -34,19 +34,32 @@ namespace PigLatin
             // your code goes here
             char[] vowel = {'a', 'e', 'i', 'o', 'u', 'y', 'A', 'E', 'I', 'O', 'U', 'Y'};
             int firstVowelLocation;
-            string beforeVowel;
-            string vowelAndBeyond;
             string firstVowel;
 
             firstVowelLocation = word.IndexOfAny(vowel);
-            firstVowel = word.Substring(firstVowelLocation,1);
-            beforeVowel = word.Substring(0, firstVowelLocation);
-            vowelAndBeyond = word.Substring(firstVowelLocation);
 
             if (firstVowelLocation < 0)
             {
                 word = word + "yay";
             }
+            else if (firstVowelLocation == 0)
+            {
+                firstVowel = word.Substring(firstVowelLocation,1);
+
+                if (firstVowel.ToUpper() != "Y")
+                {
+                    word = word + "yay";
+                }
+                else
+                {
+                    word = word.Substring(firstVowelLocation + 1) + word.Substring(firstVowelLocation, 1) + "ay";
+                }
+            }
+            else
+            {
+                word = word.Substring(firstVowelLocation) + word.Substring(0, firstVowelLocation) + "ay";
+            }
+
 
             return word;
         }
