@@ -14,6 +14,7 @@ namespace RockPaperScissors
             Console.WriteLine("Type 'Quit' without single quotes to stop playing");
             Console.WriteLine("Enter hand 1: ");
             string hand1 = Console.ReadLine();
+            Console.Clear();
 
             // If the user enters the word quit, terminates the program and clears the console
             while (hand1.ToUpper() != "QUIT")
@@ -29,6 +30,8 @@ namespace RockPaperScissors
                 Console.WriteLine("Type either 'Rock', 'Paper', or 'Scissors' without single quotes to play again!");
                 Console.WriteLine("Type 'Quit' without single quotes to stop playing");
                 hand1 = Console.ReadLine();
+                Console.Clear();
+
             }
 
             Console.Clear();
