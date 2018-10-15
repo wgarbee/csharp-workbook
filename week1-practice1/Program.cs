@@ -30,8 +30,8 @@ namespace week1_practice1
             Console.ReadKey();
             Console.Clear();
 
-            Boolean people = true;
-            Boolean f = false;
+            // Boolean people = true;
+            // Boolean f = false;
             
             decimal num = 0.0M;
             decimal prod = 0.0M;
