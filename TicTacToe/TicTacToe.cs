@@ -29,14 +29,33 @@ namespace TicTacToe
         {
             Console.WriteLine("Player " + playerTurn);
             Console.WriteLine("Enter Row:");
-            int row = int.Parse(Console.ReadLine());
+            int row = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Enter Column:");
-            int column = int.Parse(Console.ReadLine());
+            int column = Convert.ToInt32(Console.ReadLine());
+
+            PlaceMark(row, column);
         }
 
         public static void PlaceMark(int row, int column)
         {
-        // your code goes here
+            if (board[row][column] == " ")
+            {
+                if (playerTurn == "X")
+                {
+                    board[row][column] = playerTurn;
+                    playerTurn = "O";
+                }
+                else
+                {
+                    board[row][column] = playerTurn;
+                    playerTurn = "X";
+                }
+            }
+            else
+            {
+                Console.WriteLine("Space taken. Please select another.");
+                GetInput();
+            }
         }
 
         public static bool CheckForWin()
