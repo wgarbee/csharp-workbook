@@ -19,10 +19,11 @@ namespace RockPaperScissors
             // If the user enters the word quit, terminates the program and clears the console
             while (hand1.ToUpper() != "QUIT")
             {
-                // Random number generator 
+                // Random number generator for computer turn that is then assigned
                 Random randNum = new Random();
                 string hand2 = Convert.ToString(randNum.Next(1, 4));
 
+                // Calls the method that checks who the winner is
                 CompareHands(hand1, hand2);
 
                 Thread.Sleep(500);
