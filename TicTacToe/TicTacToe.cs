@@ -11,11 +11,13 @@ namespace TicTacToe
             new string[] {" ", " ", " "},
             new string[] {" ", " ", " "}
         };
+        public static int totalTurns = 0;
 
         public static void Main()
         {
             do
             {
+                Console.Clear();
                 DrawBoard();
                 GetInput();
 
@@ -23,6 +25,7 @@ namespace TicTacToe
 
             // leave this command at the end so your program does not close automatically
             Console.ReadLine();
+            Console.Clear();
         }
 
         public static void GetInput()
@@ -40,6 +43,7 @@ namespace TicTacToe
         {
             if (board[row][column] == " ")
             {
+                totalTurns++;
                 if (playerTurn == "X")
                 {
                     board[row][column] = playerTurn;
@@ -61,27 +65,73 @@ namespace TicTacToe
         public static bool CheckForWin()
         {
             // your code goes here
-
+            if (HorizontalWin() || VerticalWin() || DiagonalWin())
+            {
+                if (playerTurn == "X")
+                {
+                    Console.Clear();
+                    DrawBoard();
+                    playerTurn = "O";
+                    Console.WriteLine("{0} wins!", playerTurn);
+                }
+                else
+                {
+                    Console.Clear();
+                    DrawBoard();
+                    playerTurn = "X";
+                    Console.WriteLine("{0} wins!", playerTurn);
+                }
+                return true;
+            }
             return false;
         }
 
         public static bool CheckForTie()
         {
             // your code goes here
-
+            if (!CheckForWin() && totalTurns == 9)
+            {
+                DrawBoard();
+                Console.WriteLine("It's a tie!");
+                return true;
+            }
             return false;
         }
         
         public static bool HorizontalWin()
         {
-        // your code goes here
+            // your code goes here
+            if (board[0][0] != " " && board[0][0] == board[0][1] && board[0][1] == board [0][2])
+            {
+                return true;
+            }
+            else if (board[1][0] != " " && board[1][0] == board[1][1] && board[1][1] == board [1][2])
+            {
+                return true;
+            }
+            else if (board[2][0] != " " && board[2][0] == board[2][1] && board[2][1] == board [2][2])
+            {
+                return true;
+            }
 
-        return false;
+            return false;
         }
 
         public static bool VerticalWin()
         {
             // your code goes here
+            if (board[0][0] != " " && board[0][0] == board[1][0] && board[1][0] == board [2][0])
+            {
+                return true;
+            }
+            else if (board[0][1] != " " && board[0][1] == board[1][1] && board[1][1] == board [2][1])
+            {
+                return true;
+            }
+            else if (board[0][2] != " " && board[0][2] == board[1][2] && board[1][2] == board [2][2])
+            {
+                return true;
+            }
 
             return false;
         }
@@ -89,6 +139,14 @@ namespace TicTacToe
         public static bool DiagonalWin()
         {
             // your code goes here
+            if (board[0][0] != " " && board[0][0] == board[1][1] && board[1][1] == board [2][2])
+            {
+                return true;
+            }
+            else if (board[0][2] != " " && board[0][2] == board[1][1] && board[1][1] == board [2][0])
+            {
+                return true;
+            }
 
             return false;
         }
