@@ -53,28 +53,29 @@ namespace FizzBuzz
             String output = "";
             for (int i = 1; i <= userInput; i++)
             {
-                if (i % 3 == 0 && i % 5 == 0)
+                if (i % 3 == 0 && i % 5 == 0)  // If divisible by both 3 and 5
                 {
                     output = output + "fizz buzz";
                 }
-                else if (i % 3 == 0)
+                else if (i % 3 == 0) // If divisible by 3
                 {
                     output = output + "fizz";
                 }
-                else if (i % 5 == 0)
+                else if (i % 5 == 0)  // If divisible by 5
                 {
                     output = output + "buzz";
                 }
-                else
+                else // If not divisble by 3 or 5
                 {
                     output = output + Convert.ToString(i);
                 }
 
+                // Adds comma if number is less than user input integer
                 if (i < userInput)
                 {
                     output += ", ";
                 }
-                else
+                else  // Adds comma if number is the final number == to user input integer
                 {
                     output += ".";
                 }
@@ -94,28 +95,29 @@ namespace FizzBuzz
 
             while (i <= userInput)
             {
-                if (i % 3 == 0 && i % 5 == 0)
+                if (i % 3 == 0 && i % 5 == 0)  // If divisible by both 3 and 5
                 {
                     output = output + "fizz buzz";
                 }
-                else if (i % 3 == 0)
+                else if (i % 3 == 0) // If divisible by 3
                 {
                     output = output + "fizz";
                 }
-                else if (i % 5 == 0)
+                else if (i % 5 == 0)  // If divisible by 5
                 {
                     output = output + "buzz";
                 }
-                else
+                else  // If not divisble by 3 or 5
                 {
                     output = output + Convert.ToString(i);
                 }
 
+                // Adds comma if number is less than user input integer
                 if (i < userInput)
                 {
                     output += ", ";
                 }
-                else
+                else  // Adds comma if number is the final number == to user input integer
                 {
                     output += ".";
                 }
@@ -141,24 +143,25 @@ namespace FizzBuzz
                 {
                     output = output + "fizz buzz";
                 }
-                else if (i % 3 == 0)
+                else if (i % 3 == 0)  // If divisible by 3
                 {
                     output = output + "fizz";
                 }
-                else if (i % 5 == 0)
+                else if (i % 5 == 0)  // If divisible by 5
                 {
                     output = output + "buzz";
                 }
-                else
+                else  // If not divisble by 3 or 5
                 {
                     output = output + Convert.ToString(i);
                 }
 
+                // Adds comma if number is less than user input integer
                 if (i < userInput)
                 {
                     output += ", ";
                 }
-                else
+                else  // Adds comma if number is the final number == to user input integer
                 {
                     output += ".";
                 }
