@@ -16,13 +16,14 @@ namespace FizzBuzz
                 Console.WriteLine("1. For Loop");
                 Console.WriteLine("2. While Loop");
                 Console.WriteLine("3. Do While Loop");
-                Console.WriteLine("4. Run all three loop options");
+                Console.WriteLine("4. Run all three loops");
                 loop = Convert.ToInt32(Console.ReadLine());
 
                 WhichLoop(loop);
-            } while(loop != 0);
+            } while(loop != 0); // As long as the user does not enter '0', continues to run
         }
 
+        // Method to check which loop the user would like to run
         public static void WhichLoop(int loop)
         {
             if (loop == 1)
@@ -37,7 +38,7 @@ namespace FizzBuzz
             {
                 UseDoWhileLoop();
             }
-            else if (loop == 4)
+            else if (loop == 4) // Runs if user would like to confirm output from all three loops
             {
                 UseForLoop();
                 UseWhileLoop();
