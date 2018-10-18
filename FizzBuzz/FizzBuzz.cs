@@ -55,19 +55,28 @@ namespace FizzBuzz
             {
                 if (i % 3 == 0 && i % 5 == 0)
                 {
-                    output = output + "fizz buzz, ";
+                    output = output + "fizz buzz";
                 }
                 else if (i % 3 == 0)
                 {
-                    output = output + "fizz, ";
+                    output = output + "fizz";
                 }
                 else if (i % 5 == 0)
                 {
-                    output = output + "buzz, ";
+                    output = output + "buzz";
                 }
                 else
                 {
-                    output = output + Convert.ToString(i) + ", ";
+                    output = output + Convert.ToString(i);
+                }
+
+                if (i < userInput)
+                {
+                    output += ", ";
+                }
+                else
+                {
+                    output += ".";
                 }
             }
 
@@ -87,19 +96,28 @@ namespace FizzBuzz
             {
                 if (i % 3 == 0 && i % 5 == 0)
                 {
-                    output = output + "fizz buzz, ";
+                    output = output + "fizz buzz";
                 }
                 else if (i % 3 == 0)
                 {
-                    output = output + "fizz, ";
+                    output = output + "fizz";
                 }
                 else if (i % 5 == 0)
                 {
-                    output = output + "buzz, ";
+                    output = output + "buzz";
                 }
                 else
                 {
-                    output = output + Convert.ToString(i) + ", ";
+                    output = output + Convert.ToString(i);
+                }
+
+                if (i < userInput)
+                {
+                    output += ", ";
+                }
+                else
+                {
+                    output += ".";
                 }
 
                 i++;
@@ -121,19 +139,28 @@ namespace FizzBuzz
             {
                 if (i % 3 == 0 && i % 5 == 0)
                 {
-                    output = output + "fizz buzz, ";
+                    output = output + "fizz buzz";
                 }
                 else if (i % 3 == 0)
                 {
-                    output = output + "fizz, ";
+                    output = output + "fizz";
                 }
                 else if (i % 5 == 0)
                 {
-                    output = output + "buzz, ";
+                    output = output + "buzz";
                 }
                 else
                 {
-                    output = output + Convert.ToString(i) + ", ";
+                    output = output + Convert.ToString(i);
+                }
+
+                if (i < userInput)
+                {
+                    output += ", ";
+                }
+                else
+                {
+                    output += ".";
                 }
 
                 i++;
