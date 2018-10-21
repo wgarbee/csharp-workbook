@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Checkpoint1
 {
@@ -6,10 +7,11 @@ namespace Checkpoint1
     {
         static void Main(string[] args)
         {
-            // NumbersDivisibleByThree();
-            // AddUserNumbersTogether();
-            // FactorialMethod();
+            NumbersDivisibleByThree();
+            AddUserNumbersTogether();
+            FactorialMethod();
             RandomNumberGame();
+            FindLargestNumber();
         }
 
         public static void NumbersDivisibleByThree()
@@ -81,7 +83,6 @@ namespace Checkpoint1
             Random rand = new Random();
             int computerNum = rand.Next(1, 11);
             int attemptsLeft = 1;
-            Console.WriteLine(computerNum);
 
             do
             {
@@ -101,6 +102,32 @@ namespace Checkpoint1
                 attemptsLeft++;
 
             }while (attemptsLeft <= 4);
+
+            Console.WriteLine("Press return to run the next method.");
+            Console.ReadLine();
+            Console.Clear();
+        }
+
+        public static void FindLargestNumber()
+        {
+            String userInput;
+
+            Console.WriteLine("Enter a series of integers separated by a comma.");
+            userInput = Console.ReadLine();
+
+            String[] arrayOfNumbers = userInput.Split(",");
+            
+            int largestNumber = Convert.ToInt32(arrayOfNumbers[0]);
+
+            for (int i = 0; i < arrayOfNumbers.Length; i++)
+            {
+                if (largestNumber < Convert.ToInt32(arrayOfNumbers[i]))
+                {
+                    largestNumber = Convert.ToInt32(arrayOfNumbers[i]);
+                }
+            }
+
+            Console.WriteLine("The largest number you entered is {0}.", largestNumber);
 
             Console.WriteLine("Press return to run the next method.");
             Console.ReadLine();
