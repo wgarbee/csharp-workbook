@@ -5,13 +5,64 @@ namespace Checkpoint1
 {
     class Program
     {
+        public static bool returnToMain = true;
+
         static void Main(string[] args)
         {
-            // NumbersDivisibleByThree();
-            AddUserNumbersTogether();
-            // FactorialMethod();
-            // RandomNumberGame();
-            // FindLargestNumber();
+            UserMethodSelection();
+        }
+
+        public static void UserMethodSelection()
+        {
+            int userInput;
+
+            Console.WriteLine("Which method do you wish to run?");
+            Console.WriteLine("0: Quit");
+            Console.WriteLine("1: Numbers Divisible By Three");
+            Console.WriteLine("2: Add User Numbers Together");
+            Console.WriteLine("3: Factorial Method");
+            Console.WriteLine("4: Random Number Game");
+            Console.WriteLine("5: Find Largest Number");
+            Console.WriteLine("6: Run all 5");
+            userInput = Convert.ToInt32(Console.ReadLine());
+
+            if (userInput == 0)
+            {
+                return;
+            }
+            else if (userInput == 1)
+            {
+                NumbersDivisibleByThree();
+            }
+            else if (userInput == 2)
+            {
+                AddUserNumbersTogether();
+            }
+            else if (userInput == 3)
+            {
+                FactorialMethod();
+            }
+            else if (userInput == 4)
+            {
+                RandomNumberGame();
+            }
+            else if (userInput == 5)
+            {
+                FindLargestNumber();
+            }
+            else if (userInput == 6)
+            {
+                NumbersDivisibleByThree();
+                AddUserNumbersTogether();
+                FactorialMethod();
+                RandomNumberGame();
+                FindLargestNumber();
+            }
+            else
+            {
+                Console.WriteLine("Please enter a valid selection.");
+                userInput = Convert.ToInt32(Console.ReadLine());
+            }
         }
 
         public static void NumbersDivisibleByThree()
@@ -57,6 +108,8 @@ namespace Checkpoint1
             NextMethod();
         }
 
+        // This was the first iteration of AddUserNumbersTogether.
+        // The operating version adds everything into a string for greater readability.
         /*public static void AddUserNumbersTogether()
         {
             String userInput;
@@ -97,37 +150,33 @@ namespace Checkpoint1
                 userInput = Console.ReadLine();
             }
 
-            // foreach (int num in userInputArray)
-            // {
-            //     sumString = sumString + (num + " + ");
-            // }
-
             for (int i = 0; i < userInputArray.Count; i++)
             {
                 if (i < userInputArray.Count)
                 {
-                    sumString = sumString + (userInputArray[i] + " + ");
+                    sumString = sumString + userInputArray[i];
                 }
-                else
+
+                if (i < userInputArray.Count - 1)
                 {
-                    sumString = sumString + userInput[i];
+                    sumString += " + ";
                 }
             }
 
-            Console.WriteLine("{0} is {1}.", sumString, sum);
+            Console.WriteLine("{0} = {1}.", sumString, sum);
             
             NextMethod();
         }
 
         public static void FactorialMethod()
         {
-            int userInput;
-            int product = 1;
+            uint userInput;
+            uint product = 1;
 
             Console.WriteLine("Please enter an integer. The method will return it's factorial");
-            userInput = Convert.ToInt32(Console.ReadLine());
+            userInput = Convert.ToUInt32(Console.ReadLine());
 
-            for (int i = 2; i <= userInput; i++)
+            for (uint i = 2; i <= userInput; i++)
             {
                 product *= i;
             }
@@ -149,6 +198,12 @@ namespace Checkpoint1
                 Console.WriteLine("Please enter an integer between 1 and 10 to guess.");
                 userInput = Convert.ToInt32(Console.ReadLine());
 
+                if (userInput == 0)
+                {
+                    Console.WriteLine("Debug mode. Computer number is {0}.", computerNum);
+                    attemptsLeft++;
+                }
+
                 if (userInput == computerNum)
                 {
                     Console.WriteLine("Great! You win!");
@@ -160,6 +215,7 @@ namespace Checkpoint1
                 }
                 else
                 {
+                    Console.WriteLine("The secret number was {0}.", computerNum);
                     Console.WriteLine("Sorry, better luck next time!");
                 }
 
@@ -189,14 +245,23 @@ namespace Checkpoint1
                 }
             }
 
-            Console.WriteLine("The largest number you entered is {0}.", largestNumber);
+            Console.WriteLine("{0} is the largest number you entered.", largestNumber);
+
+            NextMethod();
         }
 
         public static void NextMethod()
         {
-            Console.WriteLine("Press return to run the next method.");
-            Console.ReadLine();
+            String userInput;
+
+            Console.WriteLine("Press return to run the next method, 'N' to return to Main.");
+            userInput = Console.ReadLine();
             Console.Clear();
+
+            if (userInput.ToUpper() == "N")
+            {
+                Main(null);
+            }
         }
     }
 }
