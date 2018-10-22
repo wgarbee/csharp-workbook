@@ -289,15 +289,11 @@ namespace Checkpoint1
             }
             else
             {
-                Console.WriteLine("Press return to run the next method, 'N' to return to the main menu.");
+                Console.WriteLine("Press return to run the next method.");
                 userInput = Console.ReadLine();
-
-                if (userInput.ToUpper() == "N")
-                {
-                    returnToMain = false;
-                    UserMethodSelection();
-                }
             }
+
+            return;
         }
     }
 }
