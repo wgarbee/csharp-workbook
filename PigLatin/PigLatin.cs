@@ -104,9 +104,10 @@ namespace PigLatin
                 if (firstVowel.ToUpper() != "Y")
                 {
                     word += "yay";
-                } // If the first letter is a Y, reinitiallize the vowel array without Y char
+                } 
                 else if (firstVowel.ToUpper() == "Y")
                 {
+                    // If the first letter is a Y, reinitiallize the vowel array without Y char
                     vowel = new char[] {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'};
                     
                     // Find the first non-Y vowel and store to firstVowelLoaction
