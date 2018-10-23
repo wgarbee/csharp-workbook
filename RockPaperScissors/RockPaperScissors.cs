@@ -7,6 +7,11 @@ namespace RockPaperScissors
     {
         public static void Main()
         {
+            getUserInput();
+        }
+
+        public static void getUserInput()
+        {
             Console.Clear();  // Clears the console prior to game start
             Console.WriteLine("Welcome to Rock | Paper | Scissors!");
             Console.WriteLine("When prompted, type either 'Rock', 'Paper', or 'Scissors' without single quotes.");
