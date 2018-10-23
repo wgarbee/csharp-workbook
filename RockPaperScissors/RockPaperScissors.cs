@@ -18,29 +18,20 @@ namespace RockPaperScissors
             Thread.Sleep(1000);
             Console.WriteLine("Type 'Quit' without single quotes to stop playing");
             Console.WriteLine("Enter hand 1: ");
-            string hand1 = Console.ReadLine();
-            Console.Clear();
+            String hand1 = Console.ReadLine();
 
-            // If the user enters the word quit, terminates the program and clears the console
-            while (hand1.ToUpper() != "QUIT")
-            {
-                // Random number generator for computer turn that is then assigned
-                Random randNum = new Random();
-                string hand2 = Convert.ToString(randNum.Next(1, 4));
+            // Random number generator for computer turn that is then assigned
+            Random randNum = new Random();
+            String hand2 = Convert.ToString(randNum.Next(1, 4));
 
-                // Calls the method that checks who the winner is
-                CompareHands(hand1, hand2);
+            // Calls the method that checks who the winner is
+            CompareHands(hand1, hand2);
 
-                Thread.Sleep(500);
-                
-                Console.WriteLine("Type either 'Rock', 'Paper', or 'Scissors' without single quotes to play again!");
-                Console.WriteLine("Type 'Quit' without single quotes to stop playing");
-                hand1 = Console.ReadLine();
-                Console.Clear();
-
-            }
-
-            Console.Clear();
+            Thread.Sleep(500);
+            
+            Console.WriteLine("Type either 'Rock', 'Paper', or 'Scissors' without single quotes to play again!");
+            Console.WriteLine("Type 'Quit' without single quotes to stop playing");
+            hand1 = Console.ReadLine();
         }
         
         public static string CompareHands(string hand1, string hand2)
