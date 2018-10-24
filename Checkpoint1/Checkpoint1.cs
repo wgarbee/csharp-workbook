@@ -5,7 +5,9 @@ namespace Checkpoint1
 {
     class Program
     {
-        public static bool returnToMain = false;
+        public static bool returnToMenu = false;
+        public static bool runAllMethods = false;
+        public static bool rerunUserMethodSelection = false;
 
         static void Main(string[] args)
         {
@@ -14,64 +16,58 @@ namespace Checkpoint1
 
         public static void UserMethodSelection()
         {
-            int userInput;
+            do
+            {
+                int userInput;
 
-            Console.Clear();
-
-            Console.WriteLine("Which method do you wish to run?");
-            Console.WriteLine("1: Numbers Divisible By Three");
-            Console.WriteLine("2: Add User Numbers Together");
-            Console.WriteLine("3: Factorial Method");
-            Console.WriteLine("4: Random Number Game");
-            Console.WriteLine("5: Find Largest Number");
-            Console.WriteLine("6: Run all 5");
-            Console.WriteLine("7: Quit");
-            userInput = Convert.ToInt32(Console.ReadLine());
-
-            if (userInput == 1)
-            {
-                returnToMain = true;
-                NumbersDivisibleByThree();
-            }
-            else if (userInput == 2)
-            {
-                returnToMain = true;
-                AddUserNumbersTogether();
-            }
-            else if (userInput == 3)
-            {
-                returnToMain = true;
-                FactorialMethod();
-            }
-            else if (userInput == 4)
-            {
-                returnToMain = true;
-                RandomNumberGame();
-            }
-            else if (userInput == 5)
-            {
-                returnToMain = true;
-                FindLargestNumber();
-            }
-            else if (userInput == 6)
-            {
-                NumbersDivisibleByThree();
-                AddUserNumbersTogether();
-                FactorialMethod();
-                RandomNumberGame();
-                returnToMain = true;
-                FindLargestNumber();
-            }
-            else if (userInput == 7)
-            {
                 Console.Clear();
-                return;
-            }
-            else
-            {
-                Console.WriteLine("Please enter a valid selection.");
+
+                Console.WriteLine("Which method do you wish to run?");
+                Console.WriteLine("1: Numbers Divisible By Three");
+                Console.WriteLine("2: Add User Numbers Together");
+                Console.WriteLine("3: Factorial Method");
+                Console.WriteLine("4: Random Number Game");
+                Console.WriteLine("5: Find Largest Number");
+                Console.WriteLine("6: Run all 5");
+                Console.WriteLine("7: Quit");
                 userInput = Convert.ToInt32(Console.ReadLine());
-            }
+
+                if (userInput == 6)
+                {
+                    runAllMethods = true;
+                }
+
+                if (userInput == 1 || userInput == 6 && returnToMenu != true)
+                {
+                    NumbersDivisibleByThree();
+                }
+                
+                if (userInput == 2 || userInput == 6 && returnToMenu != true)
+                {
+                    AddUserNumbersTogether();
+                }
+                
+                if (userInput == 3 || userInput == 6 && returnToMenu != true)
+                {
+                    FactorialMethod();
+                }
+                
+                if (userInput == 4 || userInput == 6 && returnToMenu != true)
+                {
+                    RandomNumberGame();
+                }
+                
+                if (userInput == 5 || userInput == 6 && returnToMenu != true)
+                {
+                    FindLargestNumber();
+                }
+                
+                if (userInput == 7)
+                {
+                    rerunUserMethodSelection = false;
+                    Console.Clear();
+                }
+            }while (rerunUserMethodSelection == true);
 
             return;
         }
@@ -280,17 +276,22 @@ namespace Checkpoint1
         {
             String userInput;
 
-            if (returnToMain == true)
+            if (runAllMethods == false)
             {
-                returnToMain = false;
                 Console.WriteLine("Press enter to return to the main menu.");
                 Console.ReadLine();
                 UserMethodSelection();
             }
             else
             {
-                Console.WriteLine("Press return to run the next method.");
+                Console.WriteLine("Press return to run the next method. Type 'N' to return to the main menu.");
                 userInput = Console.ReadLine();
+
+                if (userInput.ToUpper() == "N")
+                {
+                    rerunUserMethodSelection = true;
+                    returnToMenu = true;
+                }
             }
 
             return;
