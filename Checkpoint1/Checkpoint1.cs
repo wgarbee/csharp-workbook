@@ -16,7 +16,7 @@ namespace Checkpoint1
 
         public static void UserMethodSelection()
         {
-            do
+            do // Runs userMethodSelection as long as rerunUserMethodSelection returns true
             {
                 int userInput;
 
@@ -37,27 +37,27 @@ namespace Checkpoint1
                     runAllMethods = true;
                 }
 
-                if (userInput == 1 || userInput == 6 && returnToMenu != true)
+                if (userInput == 1 || userInput == 6 && !returnToMenu)
                 {
                     NumbersDivisibleByThree();
                 }
                 
-                if (userInput == 2 || userInput == 6 && returnToMenu != true)
+                if (userInput == 2 || userInput == 6 && !returnToMenu)
                 {
                     AddUserNumbersTogether();
                 }
                 
-                if (userInput == 3 || userInput == 6 && returnToMenu != true)
+                if (userInput == 3 || userInput == 6 && !returnToMenu)
                 {
                     FactorialMethod();
                 }
                 
-                if (userInput == 4 || userInput == 6 && returnToMenu != true)
+                if (userInput == 4 || userInput == 6 && !returnToMenu)
                 {
                     RandomNumberGame();
                 }
                 
-                if (userInput == 5 || userInput == 6 && returnToMenu != true)
+                if (userInput == 5 || userInput == 6 && !returnToMenu)
                 {
                     FindLargestNumber();
                 }
@@ -67,11 +67,14 @@ namespace Checkpoint1
                     rerunUserMethodSelection = false;
                     Console.Clear();
                 }
-            }while (rerunUserMethodSelection == true);
+            }while (rerunUserMethodSelection);
 
             return;
         }
 
+        // Checks for all numbers divisible by three if user selects option 1
+        // If the user selects option 2, returns total possible numbers divisible by three 
+        // between 1 and the number entered by the user.
         public static void NumbersDivisibleByThree()
         {
             Console.Clear();
@@ -115,7 +118,7 @@ namespace Checkpoint1
             NextMethod();
         }
 
-        // This was the first iteration of AddUserNumbersTogether.
+        // This was the first iteration of AddUserNumbersTogether. It has been commented out but left to show thought process.
         // The operating version adds everything into a string for greater readability and practice.
         /*public static void AddUserNumbersTogether()
         {
@@ -138,6 +141,9 @@ namespace Checkpoint1
             NextMethod();
         }*/
 
+        // Adds all integers entered by user together together. Includes lines of code to add these into a string
+        // with logic that determines if it is the last integer entered by the user. If so, instead of a '+' added
+        // to the string after the integer, it adds a '=' instead. It then adds the sum to the end of the srting and displays.
         public static void AddUserNumbersTogether()
         {
             Console.Clear();
@@ -184,6 +190,7 @@ namespace Checkpoint1
             NextMethod();
         }
 
+        // Nothing fancy, returns the factorial of an integer entered by the user.
         public static void FactorialMethod()
         {
             Console.Clear();
@@ -204,6 +211,10 @@ namespace Checkpoint1
             NextMethod();
         }
 
+        // Asks the user to enter a number between 1 and 10, inclusive of 1 and 10. They have 4 chances.
+        // The computer randomly generates a number between 1 and 10, inclusive of 1 and 10. If the user guesses correctly
+        // within 4 attempts, they win. The user can cheat entering 0 as their guess to display the number generated
+        // randomly by the computer.
         public static void RandomNumberGame()
         {
             Console.Clear();
@@ -246,6 +257,7 @@ namespace Checkpoint1
             NextMethod();
         }
 
+        // This method asks the user to enter integers seaprated by a comma and returns the largest integer.
         public static void FindLargestNumber()
         {
             Console.Clear();
@@ -272,22 +284,24 @@ namespace Checkpoint1
             NextMethod();
         }
 
+        // Depening on what the user selected in UserMethodSelection, this will run certain components.
         public static void NextMethod()
         {
             String userInput;
 
-            if (runAllMethods == false)
+            // Prompts the user to press enter to return to UserMethodSelection
+            if (!runAllMethods)
             {
                 Console.WriteLine("Press enter to return to the main menu.");
                 Console.ReadLine();
                 UserMethodSelection();
             }
-            else
+            else  // Runs if user selected '6' in UserMethodSelection
             {
                 Console.WriteLine("Press return to run the next method. Type 'N' to return to the main menu.");
                 userInput = Console.ReadLine();
 
-                if (userInput.ToUpper() == "N")
+                if (userInput.ToUpper() == "N")  // If the user enters 'N' returns them to UserMethodSelection
                 {
                     rerunUserMethodSelection = true;
                     returnToMenu = true;
