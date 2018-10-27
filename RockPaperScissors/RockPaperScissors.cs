@@ -33,11 +33,11 @@ namespace RockPaperScissors
 
                 // Calls the method that checks who the winner is
                 hand2 = ConvertComputerHand(hand2);
-                try // attempts to 
+                try
                 {
                     winner = CompareHands(hand1, hand2);
                 }
-                catch (Exception e)
+                catch (Exception e) // Catches the exception if the user enters anything other than strings indicated
                 {
                     Console.WriteLine(e);
                     Console.WriteLine("Invalid input. Please type, 'Rock', 'Paper', or 'Scissors'.");
@@ -57,6 +57,8 @@ namespace RockPaperScissors
             Console.Clear();
         }
 
+        // This method converts the computers string number to a comparative string for
+        // CompareHands method to compare against user entry.
         public static string ConvertComputerHand(String hand2)
         {
             // Assigns the string value based on the number pased into for the hand2 variable
@@ -76,6 +78,11 @@ namespace RockPaperScissors
             return hand2;
         }
         
+        // Compares the user entry and computer random selection. If the user does not enter
+        // rock, paper, scissors, or quit, this method will throw an exception back to the 
+        // getUserInput method to be displayed. Based on the comparison, returns "0" for tie,
+        // "1" for player win, and "2" for computer win. Also adds a point to the winner. If invalid
+        // user entry, decrement 1 point.
         public static String CompareHands(String hand1, String hand2)
         {
             String winner = "";
@@ -129,7 +136,7 @@ namespace RockPaperScissors
             {
                 return winner;
             }
-            else
+            else // Throws exception if user enters anything but rock, paper, scissors, or quit.
             {
                 PlayerScore = PlayerScore - 1;
                 throw new Exception("Invalid user input.");
@@ -138,6 +145,7 @@ namespace RockPaperScissors
             return winner;
         }
 
+        // Declares the hands and the winner or if there is a tie. Also outputs the current score.
         public static void DeclareWinner(String hand1, String hand2, String winner)
         {
             if (winner == "0")
