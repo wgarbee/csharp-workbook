@@ -5,6 +5,8 @@ namespace RockPaperScissors
 {
     class Program
     {
+        public static int PlayerScore = 0;
+        public static int ComputerScore = 0;
         public static void Main()
         {
             getUserInput();
@@ -12,90 +14,150 @@ namespace RockPaperScissors
 
         public static void getUserInput()
         {
+            String hand1;
             Console.Clear();  // Clears the console prior to game start
             Console.WriteLine("Welcome to Rock | Paper | Scissors!");
-            Console.WriteLine("When prompted, type either 'Rock', 'Paper', or 'Scissors' without single quotes.");
             Thread.Sleep(1000);
-            Console.WriteLine("Type 'Quit' without single quotes to stop playing");
-            Console.WriteLine("Enter hand 1: ");
-            String hand1 = Console.ReadLine();
 
-            // Random number generator for computer turn that is then assigned
-            Random randNum = new Random();
-            String hand2 = Convert.ToString(randNum.Next(1, 4));
-
-            // Calls the method that checks who the winner is
-            CompareHands(hand1, hand2);
-
-            Thread.Sleep(500);
+            do  // Runs as long as the user does not enter quit
+            {
+                Console.WriteLine("When prompted, type either 'Rock', 'Paper', or 'Scissors' without single quotes.");
+                Console.WriteLine("Type 'Quit' without single quotes to stop playing.");
+                Console.WriteLine("Enter hand 1: ");
+                hand1 = Console.ReadLine().ToUpper();
             
-            Console.WriteLine("Type either 'Rock', 'Paper', or 'Scissors' without single quotes to play again!");
-            Console.WriteLine("Type 'Quit' without single quotes to stop playing");
-            hand1 = Console.ReadLine();
+                // Random number generator for computer turn that is then assigned
+                Random randNum = new Random();
+                String hand2 = Convert.ToString(randNum.Next(1, 4));
+                String winner = "";
+
+                // Calls the method that checks who the winner is
+                hand2 = ConvertComputerHand(hand2);
+                try // attempts to 
+                {
+                    winner = CompareHands(hand1, hand2);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    Console.WriteLine("Invalid input. Please type, 'Rock', 'Paper', or 'Scissors'.");
+                    Console.WriteLine("User loses 1 point.");
+                    Console.WriteLine("Player: {0}   Computer: {1}", PlayerScore, ComputerScore);
+                }
+                finally
+                {
+                    // Console.Clear();
+                    DeclareWinner(hand1, hand2, winner);    
+                }
+
+                Thread.Sleep(500);
+                
+            }while (hand1.ToUpper() != "QUIT" && hand1.ToUpper() != "Q");
+
+            Console.Clear();
         }
-        
-        public static string CompareHands(string hand1, string hand2)
+
+        public static string ConvertComputerHand(String hand2)
         {
-            // Your code here
+            // Assigns the string value based on the number pased into for the hand2 variable
             if (hand2 == "1")
             {
-                hand2 = "Rock";
+                hand2 = "ROCK";
             }
             else if (hand2 == "2")
             {
-                hand2 = "Paper";
+                hand2 = "PAPER";
             }
             else
             {
-                hand2 = "Scissors";
+                hand2 = "SCISSORS";
             }
 
-            if (hand1.ToUpper() == hand2.ToUpper())
+            return hand2;
+        }
+        
+        public static String CompareHands(String hand1, String hand2)
+        {
+            String winner = "";
+            hand1 = hand1.ToUpper();
+
+            // Compares the values of hand1 and hand2 to determine the winner
+            if (hand1 == hand2)
             {
-                Console.WriteLine(hand1 + ' ' + hand2);
-                Console.WriteLine("It's a tie!");
+                winner = "0";
             } 
-            else if (hand1.ToUpper() == "ROCK")
+            else if (hand1 == "ROCK")
             {
-                if (hand2.ToUpper() == "PAPER")
+                if (hand2 == "PAPER")
                 {
-                    Console.WriteLine(hand1 + ' ' + hand2);
-                    Console.WriteLine("Computer wins!");
+                    winner = "2";
+                    ComputerScore++;
                 }
-                else if (hand2.ToUpper() == "SCISSORS")
+                else if (hand2 == "SCISSORS")
                 {
-                    Console.WriteLine(hand1 + ' ' + hand2);
-                    Console.WriteLine("Player wins!");
+                    winner = "1";
+                    PlayerScore++;
                 }
             }
-            else if (hand1.ToUpper() == "PAPER")
+            else if (hand1 == "PAPER")
             {
-                if (hand2.ToUpper() == "ROCK")
+                if (hand2 == "ROCK")
                 {
-                    Console.WriteLine(hand1 + ' ' + hand2);
-                    Console.WriteLine("Player wins!");
+                    winner = "1";
+                    PlayerScore++;
                 }
-                else if (hand2.ToUpper() == "SCISSORS")
+                else if (hand2 == "SCISSORS")
                 {
-                    Console.WriteLine(hand1 + ' ' + hand2);
-                    Console.WriteLine("Computer wins!");
+                    winner = "2";
+                    ComputerScore++;
                 }
             }
-            else if (hand1.ToUpper() == "SCISSORS")
+            else if (hand1 == "SCISSORS")
             {
-                if (hand2.ToUpper() == "ROCK")
+                if (hand2 == "ROCK")
                 {
-                    Console.WriteLine(hand1 + ' ' + hand2);
-                    Console.WriteLine("Computer wins!");
+                    winner = "2";
+                    ComputerScore++;
                 }
-                else if (hand2.ToUpper() == "PAPER")
+                else if (hand2 == "PAPER")
                 {
-                    Console.WriteLine(hand1 + ' ' + hand2);
-                    Console.WriteLine("Player wins!");
+                    winner = "1";
+                    PlayerScore++;
                 }
+            }
+            else if (hand1 == "QUIT")
+            {
+                return winner;
+            }
+            else
+            {
+                PlayerScore = PlayerScore - 1;
+                throw new Exception("Invalid user input.");
             }
 
-            return hand1 + ' ' + hand2;
+            return winner;
+        }
+
+        public static void DeclareWinner(String hand1, String hand2, String winner)
+        {
+            if (winner == "0")
+            {
+                Console.WriteLine(hand1 + " " + hand2);
+                Console.WriteLine("It's a tie!");
+                Console.WriteLine("Player: {0}   Computer: {1}", PlayerScore, ComputerScore);
+            }
+            else if (winner == "1")
+            {
+                Console.WriteLine(hand1 + " " + hand2);
+                Console.WriteLine("Player wins!");
+                Console.WriteLine("Player: {0}   Computer: {1}", PlayerScore, ComputerScore);
+            }
+            else if (winner == "2")
+            {
+                Console.WriteLine(hand1 + " " + hand2);
+                Console.WriteLine("Computer wins!");
+                Console.WriteLine("Player: {0}   Computer: {1}", PlayerScore, ComputerScore);
+            }
         }
     }
 }
