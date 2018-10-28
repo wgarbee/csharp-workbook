@@ -10,30 +10,38 @@ namespace Gradebook
             StudentEntry();
         }
 
+        // Takes in the users input for a student, their grades, and add them to the gradebook Dictionary.
+        // This method includes a call to check user input for student name to validate. User must enter a name or
+        // 'N' to proceed to either grade entry or exiting to either display the gradebook contents or proceed to exit the program
         public static void StudentEntry()
         {
-            Dictionary<String, List<int>> gradebook = new Dictionary<String, List<int>>();
+            Dictionary<String, List<double>> gradebook = new Dictionary<String, List<double>>(); // Declares and inits the Dict for gradebook
             String student = "";
-            List<int> grades;
+            List<double> grades;
             String userInput = "";
 
+            Console.Clear();
             do
             {
-                grades = new List<int>();
+                grades = new List<double>();  // Reinit the grades list var to clear the previously entered grades for prev student
                 Console.WriteLine("Please enter the student's name. Enter 'N' to stop.");
                 student = Console.ReadLine();
-                CheckStudentName(student);
+
+                if (!CheckStudentName(student))
+                {
+                    Console.WriteLine("Invalid entry. Student name must be in for form of a string and cannot be empty.");
+                }
 
                 while (student.ToUpper() != "N" && userInput.ToUpper() != "N" && CheckStudentName(student))
                 {
-                    int value;
+                    double value;
                     Console.WriteLine("Enter the student's grades. Enter 'N' to stop:");
                     userInput = Console.ReadLine();
-                    if (int.TryParse(userInput, out value))
+                    if (double.TryParse(userInput, out value))
                     {
-                        grades.Add(Convert.ToInt32(value));
+                        grades.Add(value);
                     }
-                    else
+                    if (!double.TryParse(userInput, out value) && userInput.ToUpper() != "N")
                     {
                         Console.WriteLine("Invalid format. Number must be an integer.");
                     }
@@ -46,8 +54,6 @@ namespace Gradebook
                     gradebook.Add(student, grades);
                 }
 
-                Console.Clear();
-
             }while (student.ToUpper() != "N");
 
             Console.Clear();
@@ -57,20 +63,21 @@ namespace Gradebook
 
         public static bool CheckStudentName(String student)
         {
-            int value;
-            if (!int.TryParse(student, out value))
+            double value;
+
+            if (!double.TryParse(student, out value) && student.Length > 0)
             {
                 return true;
             }
             return false;
         }
 
-        public static void DisplayGradebook(Dictionary<String, List<int>> gradebook)
+        public static void DisplayGradebook(Dictionary<String, List<double>> gradebook)
         {
             foreach (String key in gradebook.Keys)
             {
                 Console.WriteLine(key);
-                List<int> studentGrades = gradebook[key];
+                List<double> studentGrades = gradebook[key];
                 
                 try
                 {
@@ -89,7 +96,7 @@ namespace Gradebook
             }
         }
 
-        public static void DisplayEnteredGrades(List<int> studentGrades, String key)
+        public static void DisplayEnteredGrades(List<double> studentGrades, String key)
         {
             if (studentGrades.Count > 0)
             {
@@ -114,14 +121,14 @@ namespace Gradebook
             }
         }
 
-        public static void CalculateAverage(List<int> studentGrades, String key)
+        public static void CalculateAverage(List<double> studentGrades, String key)
         {
             if (studentGrades.Count > 0)
             {
-                int sum = 0;
-                int totalGrades = 0;
+                double sum = 0.0;
+                double totalGrades = 0.0D;
                 double average = 0.0D;
-                foreach (int num in studentGrades)
+                foreach (double num in studentGrades)
                 {
                     sum += num;
                     totalGrades++;
@@ -129,7 +136,7 @@ namespace Gradebook
 
                 try
                 {
-                    average = Convert.ToDouble(sum) / totalGrades;
+                    average = sum / totalGrades;
                 }
                 catch (Exception e)
                 {
@@ -146,11 +153,11 @@ namespace Gradebook
             }
         }
 
-        public static void CalculateMinimum(List<int> studentGrades, String key)
+        public static void CalculateMinimum(List<double> studentGrades, String key)
         {
             if (studentGrades.Count > 0)
             {
-                int smallest = studentGrades[0];
+                double smallest = studentGrades[0];
 
                 for (int i = 0; i < studentGrades.Count; i++)
                 {
@@ -168,9 +175,9 @@ namespace Gradebook
             }
         }
 
-        public static void CalculateMaximum(List<int> studentGrades, String key)
+        public static void CalculateMaximum(List<double> studentGrades, String key)
         {
-            int largest = studentGrades[0];
+            double largest = studentGrades[0];
 
             for (int i = 0; i < studentGrades.Count; i++)
             {
@@ -180,7 +187,7 @@ namespace Gradebook
                 }
             }
 
-            Console.WriteLine("The lowest grade for {0} is {1}.", key, largest);
+            Console.WriteLine("The largest grade for {0} is {1}.", key, largest);
         }
     }
 }
