@@ -22,15 +22,16 @@ namespace Gradebook
                 grades = new List<int>();
                 Console.WriteLine("Please enter the student's name. Enter 'N' to stop.");
                 student = Console.ReadLine();
+                CheckStudentName(student);
 
-                while (student.ToUpper() != "N" && userInput.ToUpper() != "N")
+                while (student.ToUpper() != "N" && userInput.ToUpper() != "N" && CheckStudentName(student))
                 {
                     int value;
                     Console.WriteLine("Enter the student's grades. Enter 'N' to stop:");
                     userInput = Console.ReadLine();
                     if (int.TryParse(userInput, out value))
                     {
-                        grades.Add(Convert.ToInt32(userInput));
+                        grades.Add(Convert.ToInt32(value));
                     }
                 }
 
@@ -41,11 +42,23 @@ namespace Gradebook
                     gradebook.Add(student, grades);
                 }
 
+                Console.Clear();
+
             }while (student.ToUpper() != "N");
-            
+
             Console.Clear();
             DisplayGradebook(gradebook);
 
+        }
+
+        public static bool CheckStudentName(String student)
+        {
+            int value;
+            if (!int.TryParse(student, out value))
+            {
+                return true;
+            }
+            return false;
         }
 
         public static void DisplayGradebook(Dictionary<String, List<int>> gradebook)
@@ -57,9 +70,10 @@ namespace Gradebook
                 
                 try
                 {
-                CalculateAverage(studentGrades, key);
-                CalculateMinimum(studentGrades, key);
-                CalculateMaximum(studentGrades, key);
+                    DisplayEnteredGrades(studentGrades, key);
+                    CalculateAverage(studentGrades, key);
+                    CalculateMinimum(studentGrades, key);
+                    CalculateMaximum(studentGrades, key);
                 }
                 catch
                 {
@@ -68,6 +82,31 @@ namespace Gradebook
 
                 Console.WriteLine("Press enter to display the next student.");
                 Console.ReadLine();
+            }
+        }
+
+        public static void DisplayEnteredGrades(List<int> studentGrades, String key)
+        {
+            if (studentGrades.Count > 0)
+            {
+                String gradeString = "";
+                for (int i = 0; i < studentGrades.Count; i++)
+                {
+                    if (i < studentGrades.Count)
+                    {
+                        gradeString = gradeString + studentGrades[i].ToString() + ", ";
+                    }
+                    else if (i == studentGrades.Count)
+                    {
+                        gradeString = gradeString + studentGrades[i].ToString();
+                    }
+                }
+
+                Console.WriteLine("Grades entered for {0}: {1}", key, gradeString);
+            }
+            else
+            {
+                throw new Exception("No grades.");
             }
         }
 
