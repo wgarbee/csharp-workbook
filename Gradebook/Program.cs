@@ -33,11 +33,15 @@ namespace Gradebook
                     {
                         grades.Add(Convert.ToInt32(value));
                     }
+                    else
+                    {
+                        Console.WriteLine("Invalid format. Number must be an integer.");
+                    }
                 }
 
                 userInput = "";
 
-                if (student.ToUpper() != "N")
+                if (student.ToUpper() != "N" && CheckStudentName(student))
                 {
                     gradebook.Add(student, grades);
                 }
@@ -92,13 +96,13 @@ namespace Gradebook
                 String gradeString = "";
                 for (int i = 0; i < studentGrades.Count; i++)
                 {
-                    if (i < studentGrades.Count)
+                    if (i + 1 == studentGrades.Count)
+                    {
+                        gradeString += studentGrades[i].ToString();
+                    }
+                    else if (i < studentGrades.Count)
                     {
                         gradeString = gradeString + studentGrades[i].ToString() + ", ";
-                    }
-                    else if (i == studentGrades.Count)
-                    {
-                        gradeString = gradeString + studentGrades[i].ToString();
                     }
                 }
 
