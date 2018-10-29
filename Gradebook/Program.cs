@@ -19,7 +19,7 @@ namespace Gradebook
             Dictionary<String, List<double>> gradebook = new Dictionary<String, List<double>>(); // Declares and inits the Dict for gradebook
             String student = "";
             List<double> grades;  // Declares but does not init the grades variable
-
+            // double highestPossibleGrade;
             Console.Clear();
 
             do
@@ -63,7 +63,6 @@ namespace Gradebook
 
         public static bool CheckStudentName(String student)
         {
-            // double value;
             Regex regexItem = new Regex("^[a-zA-Z ]*$");
             
             if (regexItem.IsMatch(student) && student.Length > 0)
@@ -78,14 +77,13 @@ namespace Gradebook
             foreach (String key in gradebook.Keys)
             {
                 Console.WriteLine(key);
-                List<double> studentGrades = gradebook[key];
                 
                 try
                 {
-                    DisplayEnteredGrades(studentGrades, key);
-                    CalculateAverage(studentGrades, key);
-                    CalculateMinimum(studentGrades, key);
-                    CalculateMaximum(studentGrades, key);
+                    Console.WriteLine(DisplayEnteredGrades(gradebook[key], key));
+                    Console.WriteLine(CalculateAverage(gradebook[key], key));
+                    Console.WriteLine(CalculateMinimum(gradebook[key], key));
+                    Console.WriteLine(CalculateMaximum(gradebook[key], key));
                 }
                 catch
                 {
@@ -97,7 +95,7 @@ namespace Gradebook
             }
         }
 
-        public static void DisplayEnteredGrades(List<double> studentGrades, String key)
+        public static String DisplayEnteredGrades(List<double> studentGrades, String key)
         {
             if (studentGrades.Count > 0)
             {
@@ -106,7 +104,7 @@ namespace Gradebook
                 {
                     if (i + 1 == studentGrades.Count)
                     {
-                        gradeString += studentGrades[i].ToString();
+                        gradeString = gradeString + "and " + studentGrades[i].ToString();
                     }
                     else if (i < studentGrades.Count)
                     {
@@ -114,7 +112,7 @@ namespace Gradebook
                     }
                 }
 
-                Console.WriteLine("Grades entered for {0}: {1}", key, gradeString);
+                return $"Grades entered for {key}: {gradeString}";
             }
             else
             {
@@ -122,7 +120,7 @@ namespace Gradebook
             }
         }
 
-        public static void CalculateAverage(List<double> studentGrades, String key)
+        public static String CalculateAverage(List<double> studentGrades, String key)
         {
             if (studentGrades.Count > 0)
             {
@@ -135,18 +133,9 @@ namespace Gradebook
                     totalGrades++;
                 }
 
-                try
-                {
-                    average = sum / totalGrades;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
-                finally
-                {
-                    Console.WriteLine("The average grade for {0} is {1}.", key, average);
-                }
+                average = sum / totalGrades;
+
+                return $"The average grade for {key} is {average}.";
             }
             else
             {
@@ -154,7 +143,7 @@ namespace Gradebook
             }
         }
 
-        public static void CalculateMinimum(List<double> studentGrades, String key)
+        public static String CalculateMinimum(List<double> studentGrades, String key)
         {
             if (studentGrades.Count > 0)
             {
@@ -168,7 +157,7 @@ namespace Gradebook
                     }
                 }
 
-                Console.WriteLine("The lowest grade for {0} is {1}.", key, smallest);
+                return $"The lowest grade for {key} is {smallest}.";
             }
             else
             {
@@ -176,19 +165,26 @@ namespace Gradebook
             }
         }
 
-        public static void CalculateMaximum(List<double> studentGrades, String key)
+        public static String CalculateMaximum(List<double> studentGrades, String key)
         {
-            double largest = studentGrades[0];
-
-            for (int i = 0; i < studentGrades.Count; i++)
+            if (studentGrades.Count > 0)
             {
-                if (studentGrades[i] > largest)
-                {
-                    largest = studentGrades[i];
-                }
-            }
+                double largest = studentGrades[0];
 
-            Console.WriteLine("The largest grade for {0} is {1}.", key, largest);
+                for (int i = 0; i < studentGrades.Count; i++)
+                {
+                    if (studentGrades[i] > largest)
+                    {
+                        largest = studentGrades[i];
+                    }
+                }
+
+                return $"The largest grade for {key} is {largest}.";
+            }
+            else
+            {
+                throw new Exception("No grades.");
+            }
         }
     }
 }
