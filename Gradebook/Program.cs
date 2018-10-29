@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Gradebook
 {
@@ -17,19 +18,20 @@ namespace Gradebook
         {
             Dictionary<String, List<double>> gradebook = new Dictionary<String, List<double>>(); // Declares and inits the Dict for gradebook
             String student = "";
-            List<double> grades;
-            String userInput = "";
+            List<double> grades;  // Declares but does not init the grades variable
 
             Console.Clear();
+
             do
             {
+                String userInput = "";
                 grades = new List<double>();  // Reinit the grades list var to clear the previously entered grades for prev student
                 Console.WriteLine("Please enter the student's name. Enter 'N' to stop.");
                 student = Console.ReadLine();
 
                 if (!CheckStudentName(student))
                 {
-                    Console.WriteLine("Invalid entry. Student name must be in for form of a string and cannot be empty.");
+                    Console.WriteLine("Invalid entry. Student name must be in for form of an alpha string (sorry, Tech N9ne) and cannot be empty.");
                 }
 
                 while (student.ToUpper() != "N" && userInput.ToUpper() != "N" && CheckStudentName(student))
@@ -45,10 +47,8 @@ namespace Gradebook
                     {
                         Console.WriteLine("Invalid format. Number must be an integer.");
                     }
-                }
-
-                userInput = "";
-
+                }                
+                
                 if (student.ToUpper() != "N" && CheckStudentName(student))
                 {
                     gradebook.Add(student, grades);
@@ -63,9 +63,10 @@ namespace Gradebook
 
         public static bool CheckStudentName(String student)
         {
-            double value;
-
-            if (!double.TryParse(student, out value) && student.Length > 0)
+            // double value;
+            Regex regexItem = new Regex("^[a-zA-Z ]*$");
+            
+            if (regexItem.IsMatch(student) && student.Length > 0)
             {
                 return true;
             }
@@ -144,7 +145,7 @@ namespace Gradebook
                 }
                 finally
                 {
-                    Console.WriteLine("The average for {0} is {1}.", key, average);
+                    Console.WriteLine("The average grade for {0} is {1}.", key, average);
                 }
             }
             else
