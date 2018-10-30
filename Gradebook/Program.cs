@@ -19,7 +19,6 @@ namespace Gradebook
             Dictionary<String, List<double>> gradebook = new Dictionary<String, List<double>>(); // Declares and inits the Dict for gradebook
             String student = "";
             List<double> grades;  // Declares but does not init the grades variable
-            // double highestPossibleGrade;
             Console.Clear();
 
             do
@@ -63,7 +62,7 @@ namespace Gradebook
 
         public static bool CheckStudentName(String student)
         {
-            Regex regexItem = new Regex("^[a-zA-Z ]*$");
+            Regex regexItem = new Regex("^[a-zA-Z]*$");
             
             if (regexItem.IsMatch(student) && student.Length > 0)
             {
