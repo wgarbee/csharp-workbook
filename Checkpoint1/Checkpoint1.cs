@@ -18,7 +18,7 @@ namespace Checkpoint1
         {
             do // Runs userMethodSelection as long as rerunUserMethodSelection returns true
             {
-                int userInput;
+                int? userInput;
 
                 Console.Clear();
 
@@ -62,7 +62,7 @@ namespace Checkpoint1
                     FindLargestNumber();
                 }
                 
-                if (userInput == 7)
+                if (userInput == 7/*  || userInput == null */)
                 {
                     rerunUserMethodSelection = false;
                     Console.Clear();
@@ -271,7 +271,7 @@ namespace Checkpoint1
             
             float largestNumber = Convert.ToInt32(arrayOfNumbers[0]);
 
-            for (int i = 0; i < arrayOfNumbers.Length; i++)
+            for (int i = 1; i < arrayOfNumbers.Length; i++)
             {
                 if (largestNumber < Convert.ToInt32(arrayOfNumbers[i]))
                 {
