@@ -24,7 +24,7 @@ namespace RockPaperScissors
                 Console.WriteLine("When prompted, type either 'Rock', 'Paper', or 'Scissors' without single quotes.");
                 Console.WriteLine("Type 'Quit' without single quotes to stop playing.");
                 Console.WriteLine("Enter hand 1: ");
-                hand1 = Console.ReadLine().ToUpper();
+                hand1 = Console.ReadLine().ToUpper();  // Stores user input and stores as upper case for ease of comparison
             
                 // Random number generator for computer turn that is then assigned
                 Random randNum = new Random();
@@ -37,9 +37,9 @@ namespace RockPaperScissors
                 {
                     winner = CompareHands(hand1, hand2);
                 }
-                catch (Exception e) // Catches the exception if the user enters anything other than strings indicated
+                catch  // Catches the exception if the user enters anything other than strings indicated
                 {
-                    Console.WriteLine(e);
+                    // Console.WriteLine(e);
                     Console.WriteLine("Invalid input. Please type, 'Rock', 'Paper', or 'Scissors'.");
                     Console.WriteLine("User loses 1 point.");
                     Console.WriteLine("Player: {0}   Computer: {1}", PlayerScore, ComputerScore);
@@ -146,6 +146,7 @@ namespace RockPaperScissors
         }
 
         // Declares the hands and the winner or if there is a tie. Also outputs the current score.
+        // If winner == 0, it's a tie, if == 1, player wins, if == 2, computer wins
         public static void DeclareWinner(String hand1, String hand2, String winner)
         {
             if (winner == "0")
