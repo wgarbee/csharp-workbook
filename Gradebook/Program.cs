@@ -28,11 +28,13 @@ namespace Gradebook
                 Console.WriteLine("Please enter the student's name. Enter 'N' to stop.");
                 student = Console.ReadLine();
 
+                // Passes the user input to CheckStudentName
                 if (!CheckStudentName(student))
                 {
                     Console.WriteLine("Invalid entry. Student name must be in for form of an alpha string (sorry, Tech N9ne) and cannot be empty.");
                 }
 
+                // Allows for continuous input of the students grades until user enters N
                 while (student.ToUpper() != "N" && userInput.ToUpper() != "N" && CheckStudentName(student))
                 {
                     double value;
@@ -48,18 +50,20 @@ namespace Gradebook
                     }
                 }                
                 
+                // As long as the student entry isn't N and is valid, passes the entered grades to 
                 if (student.ToUpper() != "N" && CheckStudentName(student))
                 {
                     gradebook.Add(student, grades);
                 }
 
-            }while (student.ToUpper() != "N");
+            }while (student.ToUpper() != "N");  // If user enters N, ends loop and moves to displaying the gradebook
 
             Console.Clear();
             DisplayGradebook(gradebook);
 
         }
 
+        // Makes sure the user enters an alpha string. Makes sure there are no numbers or special characters.
         public static bool CheckStudentName(String student)
         {
             Regex regexItem = new Regex("^[a-zA-Z]*$");
@@ -71,21 +75,23 @@ namespace Gradebook
             return false;
         }
 
+        // Runs the DisplayGradebook method that calls the calculation methods
         public static void DisplayGradebook(Dictionary<String, List<double>> gradebook)
         {
             foreach (String key in gradebook.Keys)
             {
-                Console.WriteLine(key);
+                Console.WriteLine(key);  // Displays the students name that is being run for the next method calls
                 
                 try
                 {
-                    Console.WriteLine(DisplayEnteredGrades(gradebook[key], key));
-                    Console.WriteLine(CalculateAverage(gradebook[key], key));
-                    Console.WriteLine(CalculateMinimum(gradebook[key], key));
-                    Console.WriteLine(CalculateMaximum(gradebook[key], key));
+                    Console.WriteLine($"The grades entered for {key}: {DisplayEnteredGrades(gradebook[key])}.");
+                    Console.WriteLine($"The average grade for {key} is {CalculateAverage(gradebook[key])}.");
+                    Console.WriteLine($"The lowest grade for {key} is {CalculateMinimum(gradebook[key])}.");
+                    Console.WriteLine($"The highest grade for {key} is {CalculateMaximum(gradebook[key])}.");
                 }
                 catch
-                {
+                {   // If the user did not enter any grades for the current student, catches exception and dumps out 
+                    // to display the next student, if applicable.
                     Console.WriteLine("No grades were entered for {0}.", key);
                 }
 
@@ -94,96 +100,79 @@ namespace Gradebook
             }
         }
 
-        public static String DisplayEnteredGrades(List<double> studentGrades, String key)
+        // Checks if grades were entered. If grades were entered, builds a string of those entered grades and passes them back.
+        public static String DisplayEnteredGrades(List<double> studentGrades)
         {
             if (studentGrades.Count > 0)
             {
                 String gradeString = "";
                 for (int i = 0; i < studentGrades.Count; i++)
                 {
-                    if (i + 1 == studentGrades.Count)
+                    if (i + 1 == studentGrades.Count)  // If we're at the end of the grades entered. #grammar
                     {
                         gradeString = gradeString + "and " + studentGrades[i].ToString();
                     }
-                    else if (i < studentGrades.Count)
+                    else if (i < studentGrades.Count)  // If not at the end of the list of grades.
                     {
                         gradeString = gradeString + studentGrades[i].ToString() + ", ";
                     }
                 }
 
-                return $"Grades entered for {key}: {gradeString}";
+                return gradeString;
             }
             else
-            {
+            {   // If the user did not enter any grades for the student, returns an exception
                 throw new Exception("No grades.");
             }
         }
 
-        public static String CalculateAverage(List<double> studentGrades, String key)
+        // Calculates the average of the grades for the current student
+        public static double CalculateAverage(List<double> studentGrades)
         {
-            if (studentGrades.Count > 0)
+            double sum = 0.0;
+            double totalGrades = 0.0D;
+            double average = 0.0D;
+            foreach (double num in studentGrades)
             {
-                double sum = 0.0;
-                double totalGrades = 0.0D;
-                double average = 0.0D;
-                foreach (double num in studentGrades)
-                {
-                    sum += num;
-                    totalGrades++;
-                }
-
-                average = sum / totalGrades;
-
-                return $"The average grade for {key} is {average}.";
+                sum += num;
+                totalGrades++;
             }
-            else
-            {
-                throw new Exception("No grades.");
-            }
+
+            average = sum / totalGrades;
+
+            return average;
         }
 
-        public static String CalculateMinimum(List<double> studentGrades, String key)
+        // Finds the lowest of entered grades for the current student
+        public static double CalculateMinimum(List<double> studentGrades)
         {
-            if (studentGrades.Count > 0)
-            {
-                double smallest = studentGrades[0];
+            double smallest = studentGrades[0];
 
-                for (int i = 0; i < studentGrades.Count; i++)
+            for (int i = 0; i < studentGrades.Count; i++)
+            {
+                if (studentGrades[i] < smallest)
                 {
-                    if (studentGrades[i] < smallest)
-                    {
-                        smallest = studentGrades[i];
-                    }
+                    smallest = studentGrades[i];
                 }
+            }
 
-                return $"The lowest grade for {key} is {smallest}.";
-            }
-            else
-            {
-                throw new Exception("No grades.");
-            }
+            return smallest;
         }
 
-        public static String CalculateMaximum(List<double> studentGrades, String key)
+        // Finds the highest of entered grades for the current student
+        public static double CalculateMaximum(List<double> studentGrades)
         {
-            if (studentGrades.Count > 0)
-            {
-                double largest = studentGrades[0];
+            double largest = studentGrades[0];
 
-                for (int i = 0; i < studentGrades.Count; i++)
+            for (int i = 0; i < studentGrades.Count; i++)
+            {
+                if (studentGrades[i] > largest)
                 {
-                    if (studentGrades[i] > largest)
-                    {
-                        largest = studentGrades[i];
-                    }
+                    largest = studentGrades[i];
                 }
+            }
 
-                return $"The largest grade for {key} is {largest}.";
-            }
-            else
-            {
-                throw new Exception("No grades.");
-            }
+            return largest;
         }
     }
 }
