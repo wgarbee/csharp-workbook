@@ -7,13 +7,13 @@ namespace CarLot
     {
         static void Main(string[] args)
         {
-            Vehicle fordF150 = new Vehicle("Ford", "F150", "Black");
+            // Vehicle fordF150 = new Vehicle("Ford", "F150", "Black");
             Lot MacHaik = new Lot("MacHaik");
 
             // Console.WriteLine(MacHaik.dealerName);
             // Console.WriteLine(fordF150.ToString());
 
-            MacHaik.parkVehicle(fordF150);
+            // MacHaik.parkVehicle(fordF150);
 
             // Console.WriteLine(MacHaik.showInventory());
 
@@ -21,7 +21,7 @@ namespace CarLot
 
             while (!done)
             {
-                String userInput = UserSelection();
+                String userInput = UserSelection().ToLower();
 
                 if (userInput == "list")
                 {
@@ -31,20 +31,31 @@ namespace CarLot
                 {
                     MacHaik.parkVehicle(AddToInventory());
                 }
-                else if (userInput == "delete")
+                else if (userInput == "remove")
                 {
-                    MacHaik.removeVehicle(DeleteFromInventory());
+                    int location = DeleteFromInventory();
+                    if (location >= 0 && location < MacHaik.numberOfVehicles)
+                    {
+                        MacHaik.removeVehicle(location);
+                        Console.WriteLine(MacHaik.showInventory());
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invlaid entry.");
+                    }
                 }
                 else if (userInput == "quit")
                 {
                     done = true;
                 }
+
+                Console.WriteLine();
             }
         }
 
         public static String UserSelection()
         {
-            Console.WriteLine("Would you like to do with the inventory? list / add / delete?");
+            Console.WriteLine("What would you like to do with the inventory? list / add / remove?");
             return Console.ReadLine();
         }
 
@@ -67,14 +78,23 @@ namespace CarLot
         {
             Console.WriteLine("Enter the number location you would like to delete:");
             int location = Convert.ToInt32(Console.ReadLine());
-            
-            return location - 1;
+
+            try
+            {
+                return location - 1;
+            }
+            catch
+            {
+                return -1;
+            }
         }
     }
 
     class Lot
     {
         public String dealerName { get; private set; }
+
+        public int numberOfVehicles;
 
         private List<Vehicle> vehicles = new List<Vehicle>();
 
@@ -86,23 +106,33 @@ namespace CarLot
         public void parkVehicle(Vehicle vehicle)
         {
             vehicles.Add(vehicle);
+            numberOfVehicles++;
         }
 
         public void removeVehicle(int spot)
         {
             vehicles.RemoveAt(spot);
+            numberOfVehicles--;
         }
 
         public String showInventory()
         {
             String formattedString = "";
             int placeInInventory = 1;
-            foreach (Vehicle vehicle in vehicles)
+
+            if (vehicles.Count > 0)
             {
-                formattedString += placeInInventory + " -- " + vehicle.ToString() + "\n";
-                placeInInventory++;
+                foreach (Vehicle vehicle in vehicles)
+                {
+                    formattedString += placeInInventory + " -- " + vehicle.ToString() + "\n";
+                    placeInInventory++;
+                }
+                return formattedString.Trim();
             }
-            return formattedString.Trim();
+            else
+            {
+                return "There are currently no cars in inventory";
+            }
         }
     }
 
