@@ -23,7 +23,7 @@ namespace TowersOfHanoi
 
         public void DrawGameBoard()
         {
-            foreach (Tower tower in gameboard)
+            foreach (KeyValuePair<Tower, Block> tower in gameboard)
             {
                 
             }
