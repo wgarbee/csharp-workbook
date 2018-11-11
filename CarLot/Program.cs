@@ -33,15 +33,20 @@ namespace CarLot
                 }
                 else if (userInput == "remove")
                 {
-                    int location = DeleteFromInventory();
-                    if (location >= 0 && location < MacHaik.numberOfVehicles)
+
+                    if (/* location > 0 && location < MacHaik.numberOfVehicles &&  */MacHaik.getVehiclesCount.Count > 0)
                     {
+                        int location = DeleteFromInventory();
                         MacHaik.removeVehicle(location);
-                        Console.WriteLine(MacHaik.showInventory());
+                        if (MacHaik.getVehiclesCount.Count > 0)
+                        {
+                            Console.WriteLine("Remaining in inventory:");
+                            Console.WriteLine(MacHaik.showInventory());
+                        }
                     }
                     else
                     {
-                        Console.WriteLine("Invlaid entry.");
+                        Console.WriteLine("There are no vehicles currently in inventory.");
                     }
                 }
                 else if (userInput == "quit")
@@ -55,7 +60,7 @@ namespace CarLot
 
         public static String UserSelection()
         {
-            Console.WriteLine("What would you like to do with the inventory? list / add / remove?");
+            Console.WriteLine("What would you like to do with the inventory? list / add / remove / quit?");
             return Console.ReadLine();
         }
 
@@ -70,8 +75,92 @@ namespace CarLot
             Console.WriteLine("Please enter the color of the vehicle: ");
             String color = Console.ReadLine();
 
-            Vehicle newVehicle = new Vehicle(make, model, color);
-            return newVehicle;
+            bool valid = false;
+            
+            do
+            {
+                Console.WriteLine("What type of vehicle is this? Car[C] / Truck[T] / Motorcycle[M]");
+                String type = Console.ReadLine().ToLower();
+            
+                if (type == "c")
+                {
+                    String carType;
+                    // bool validCar;
+                    do
+                    {
+                        Console.WriteLine("Is this a sedan[S], coupe[C], or hatchback[H]?");
+                        carType = Console.ReadLine().ToLower();
+                        valid = (carType == "s" || carType == "sedan" || carType == "c" || carType == "coupe" || carType == "h" || carType == "hatchback");
+                        if (!valid)
+                        {
+                            Console.WriteLine("Invalid entry.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Vehicle added to inventory!");
+                            // validCar = true;
+                        }
+                    }while (!valid);
+
+                    Vehicle newVehicle = new Car(make, model, color, carType);
+                    // valid = true;
+                    return newVehicle;
+                }
+                else if (type == "t")
+                {
+                    String truckType;
+                    // bool validTruck;
+                    do
+                    {
+                        Console.WriteLine("Is this a light[L] or heavy[H] duty truck?");
+                        truckType = Console.ReadLine().ToLower();
+                        valid = (truckType == "l" || truckType == "light" || truckType == "h" || truckType == "heavy");
+
+                        if (!valid)
+                        {
+                            Console.WriteLine("Invalid entry.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Vehicle added to inventory!");
+                        }
+                    }while (!valid);
+                    
+                    Vehicle newVehicle = new Truck(make, model, color, truckType);
+                    // valid = true;
+                    return newVehicle;
+                }
+                else if (type == "m")
+                {
+                    String motorcycleType;
+                    do
+                    {
+                        Console.WriteLine("Is this a cruiser[C] or sport[S] motorcycle?");
+                        motorcycleType = Console.ReadLine().ToLower();
+                        valid = (motorcycleType == "c" || motorcycleType == "cruiser" || motorcycleType == "s" || motorcycleType == "sport");
+                        
+                        if (!valid)
+                        {
+                            Console.WriteLine("Invalid entry.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Vehicle added to inventory!");
+                        }
+                    } while (!valid);
+
+                    Vehicle newVehicle = new Motorcycle(make, model, color, motorcycleType);
+                    // valid = true;
+                    return newVehicle;
+                }
+                else if (!valid)
+                {
+                    Console.WriteLine("You must make a valid entry");
+                }
+            } while (!valid);
+
+            // Vehicle newVehicle = new Vehicle(make, model, color);
+            return null;
         }
 
         public static int DeleteFromInventory()
@@ -94,9 +183,15 @@ namespace CarLot
     {
         public String dealerName { get; private set; }
 
-        public int numberOfVehicles;
-
         private List<Vehicle> vehicles = new List<Vehicle>();
+
+        public List<Vehicle> getVehiclesCount
+        {
+            get
+            {
+                return this.vehicles;
+            }
+        }
 
         public Lot(String dealerName)
         {
@@ -106,26 +201,25 @@ namespace CarLot
         public void parkVehicle(Vehicle vehicle)
         {
             vehicles.Add(vehicle);
-            numberOfVehicles++;
         }
 
         public void removeVehicle(int spot)
         {
             vehicles.RemoveAt(spot);
-            numberOfVehicles--;
         }
 
         public String showInventory()
         {
             String formattedString = "";
-            int placeInInventory = 1;
+            int locationInInventory = 1;
 
             if (vehicles.Count > 0)
             {
                 foreach (Vehicle vehicle in vehicles)
                 {
-                    formattedString += placeInInventory + " -- " + vehicle.ToString() + "\n";
-                    placeInInventory++;
+                    String vehicleClass = vehicle.GetType().Name;
+                    formattedString += locationInInventory + " -- " + vehicleClass + " -- " + vehicle.ToString() + "\n";
+                    locationInInventory++;
                 }
                 return formattedString.Trim();
             }
@@ -137,7 +231,7 @@ namespace CarLot
     }
 
     // Superclass for Vehicle
-    public class Vehicle
+    public abstract class Vehicle
     {
         String make;
 
@@ -145,50 +239,104 @@ namespace CarLot
 
         String color;
 
-        // int numberOfWheels;
+        int numberOfWheels;
 
-        public Vehicle(String make, String model, String color/* , int numberOfWheels */)
+        public Vehicle(String make, String model, String color, int numberOfWheels)
         {
             this.make = make;
             this.model = model;
             this.color = color;
-            // this.numberOfWheels = numberOfWheels;
+            this.numberOfWheels = numberOfWheels;
         }
 
-        override
-        public String ToString()
+        public override String ToString()
         {
-            String formattedString = "Make: " + make + "   Model: " + model + "   Color: " + color;
-
+            String formattedString = $"Make: {make}   Model: {model}   Color: {color}   Has {numberOfWheels} wheels.";
             return formattedString;
         }
     }
 
     // sub-class for Car - vehicle
-    /* public class Car : Vehicle
+    public class Car : Vehicle
     {
-        bool isHatchBack;
-        public Car(String make, String model, String color, bool isHatchBack):base(make, model, color, 4)
+        public String carType { get; private set; }
+
+        public String vehicleType { get; private set; }
+
+        public Car(String make, String model, String color, String carType) : base(make, model, color, 4)
         {
-            this.isHatchBack = isHatchBack;
+            if (carType == "s")
+            {
+                this.carType = "sedan";
+            }
+            else if (carType == "c")
+            {
+                this.carType = "coupe";
+            }
+            else if (carType == "h")
+            {
+                this.carType = "hatchback";
+            }
+            else
+            {
+                this.carType = carType;
+                this.vehicleType = this.carType;
+            }
+        }
+
+        public String GetVehicleType()
+        {
+            return vehicleType;
         }
     }
 
     // sub-class for Truck - vehicle
     public class Truck : Vehicle
     {
-        public Truck(String make, String model, String color)
-        {
+        private String truckType;
 
+        public String vehicleType { get; private set; }
+        
+        public Truck(String make, String model, String color, String truckType) : base (make, model, color, 4)
+        {
+            if (truckType == "l")
+            {
+                this.truckType = "light";
+            }
+            else if (truckType == "h")
+            {
+                this.truckType = "heavy";
+            }
+            else
+            {
+                this.truckType = truckType;
+                this.vehicleType = this.truckType;
+            }
         }
     }
 
     // sub-class for Motorcycle - vehicle
     public class Motorcycle : Vehicle
     {
-        public Motorcycle(String make, String model, String color)
-        {
+        private String motorcycleType;
 
+        public String vehicleType { get; private set; }
+
+        public Motorcycle(String make, String model, String color, String motorcycleType) : base (make, model, color, 2)
+        {
+            if (motorcycleType == "c")
+            {
+                this.motorcycleType = "cruiser";
+            }
+            else if (motorcycleType == "s")
+            {
+                this.motorcycleType = "sport";
+            }
+            else
+            {
+                this.motorcycleType = motorcycleType;
+                this.vehicleType = this.motorcycleType;
+            }
         }
-    } */
+    }
 }
