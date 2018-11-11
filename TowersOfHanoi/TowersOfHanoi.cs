@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TowersOfHanoi
 {
@@ -6,7 +7,42 @@ namespace TowersOfHanoi
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Game game = new Game();
+            game.StartGame();
         }
     }
-}
+
+    class Game
+    {
+        Dictionary<Tower, Block> gameboard;
+
+        public Game()
+        {
+
+        }
+
+        public void DrawGameBoard()
+        {
+            foreach (Tower tower in gameboard)
+            {
+                
+            }
+        }
+    }
+
+    class Tower
+    {
+        Stack<Block> blocks;
+        public Tower()
+        {
+
+        }
+    }
+
+    class Block
+    {
+        public Block()
+        {
+
+        }
+    }
