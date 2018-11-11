@@ -4,16 +4,41 @@ public class Program
 {
 	public static void Main()
 	{
+        Person luke = new Person("Luke", "Skywalker", "Rebel");
 		Person leia = new Person("Leia", "Organa", "Rebel");
+        Person han = new Person("Han", "Solo", "Rebel");
 		Person darth = new Person("Darth", "Vader", "Imperial");
-		Ship falcon = new Ship("Rebel", "Smuggling", 2);
-		Ship tie = new Ship("Tie", "Fighter", 1);
-        // Station rebelSpaceStation = new Station("Yavin 4");
-        // Station deathStar = new Station("Death Star");
-		Console.WriteLine("Hello world!");
+        Person emperor = new Person("Emperor", "Palpatine", "Imperial");
+        Ship xWing = new Ship("Rebel", "Fighter", 1);
+		Ship falcon = new Ship("Rebel", "Smuggler", 2);
+		Ship tie = new Ship("Imperial", "Fighter", 1);
+        Station yavin = new Station("Yavin 4", "Rebel", 2);
+        Station deathStar = new Station("Death Star", "Imperial", 1);
+
+		Console.WriteLine("A long time ago in a galaxy far far away...");
+        
+        // Updates Leias name
         leia.FullName = "Leia Solo";
+
+        // Han and Leia enter Millenium Falcon
+        Console.WriteLine("Han and Leia enter the Falcon...");
+        falcon.EnterShip(han, 0);
         falcon.EnterShip(leia, 1);
+        Console.ReadLine();
+
+        // Darth enters the tie fighter
+        Console.WriteLine("Darth Vader enters the Tie Fighter...");
+        tie.EnterShip(darth, 0);
+        Console.ReadLine();
+
+        // Shows who is in each ship
         Console.WriteLine(falcon.Passengers);
+        Console.WriteLine(tie.Passengers);
+        Console.ReadLine();
+
+        // Yavin is captured by Imperial forces
+        yavin.Affiliation = "Imperial";
+        Console.WriteLine(yavin.Affiliation);
 	}
 }
 
@@ -71,22 +96,77 @@ class Ship
 	{
 		get
 		{
+            String formattedString = "";
+
 			foreach (var person in passengers)
 			{
-				Console.WriteLine(String.Format("{0}", person.FullName));
+                if (person != null)
+                {
+                    formattedString += person.FullName + "\n";
+                }
+                else
+                {
+                    return formattedString + "That's Everybody!";
+                }
+				// Console.WriteLine(String.Format("{0}", person.FullName));
 			}
 
-			return "That's Everybody!";
+			return formattedString + "That's Everybody!";
 		}
 	}
 
 	public void EnterShip(Person person, int seat)
 	{
-		this.passengers[seat] = person;
+        if (passengers[seat] == null)
+        {
+            this.passengers[seat] = person;
+        }
+        else
+        {
+            throw new Exception("Someone is already in that seat.");
+        }
 	}
 
 	public void ExitShip(int seat)
 	{
-		this.passengers[seat] = null;
+        if (passengers[seat] != null)
+        {
+            this.passengers[seat] = null;
+        }
+		else
+        {
+            throw new Exception("No one is in that seat.");
+        }
 	}
+}
+
+class Station
+{
+    private String StationName;
+
+    String Affiliation { public get; public set; }
+
+    private int Size;
+
+    private Ship[] ships;
+
+    public Station(String stationName, String type, int size)
+    {
+        this.StationName = stationName;
+        this.Affiliation = type;
+        this.Size = size;
+    }
+
+    /* public String affiliation
+    {
+        get
+        {
+            return Affiliation;
+        }
+
+        set
+        {
+            this.Affiliation = affiliation;
+        }
+    } */
 }
