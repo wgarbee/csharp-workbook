@@ -16,17 +16,33 @@ namespace TowersOfHanoi
     {
         Dictionary<Tower, Block> gameboard;
 
+        
+
         public Game()
         {
+            return;
+        }
 
+        public void StartGame()
+        {
+            bool won = false;
+
+            while (!won)
+            {
+                DrawGameBoard();
+                won = true;
+            }
         }
 
         public void DrawGameBoard()
         {
-            foreach (KeyValuePair<Tower, Block> tower in gameboard)
-            {
-                
-            }
+            // Console.WriteLine("A: ");
+            // Console.WriteLine("B: ");
+            // Console.WriteLine("C: ");
+            // foreach (Tower tower in gameboard.Keys)
+            // {
+            //     Console.WriteLine(tower + ": ");
+            // }
         }
     }
 
@@ -35,7 +51,7 @@ namespace TowersOfHanoi
         Stack<Block> blocks;
         public Tower()
         {
-
+            
         }
     }
 
@@ -46,3 +62,4 @@ namespace TowersOfHanoi
 
         }
     }
+}
