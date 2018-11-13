@@ -61,7 +61,7 @@ namespace CarLot
         public static String UserSelection()
         {
             Console.WriteLine("What would you like to do with the inventory? list / add / remove / quit?");
-            return Console.ReadLine();
+            return Console.ReadLine().Trim();
         }
 
         public static Vehicle AddToInventory()
@@ -242,9 +242,9 @@ namespace CarLot
             this.numberOfWheels = numberOfWheels;
         }
 
-        public override String VehicleData()
+        public virtual String VehicleData()
         {
-            return formattedString = $"Make: {make}   Model: {model}   Color: {color}   Number of wheels: {numberOfWheels}";
+            return $"Make: {make}   Model: {model}   Color: {color}   Number of wheels: {numberOfWheels}";
         }
     }
 
