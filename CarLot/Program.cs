@@ -176,18 +176,20 @@ namespace CarLot
     {
         public String dealerName { get; private set; }
 
-        private List<Vehicle> vehicles = new List<Vehicle>();
+        private List<Vehicle> vehicles;
 
         public List<Vehicle> getVehiclesCount
         {
             get
             {
-                return this.vehicles;
+                List<Vehicle> vehiclesCopy = vehicles;
+                return vehiclesCopy;
             }
         }
 
         public Lot(String dealerName)
         {
+            vehicles = new List<Vehicle>();
             this.dealerName = dealerName;
         }
 
@@ -208,13 +210,15 @@ namespace CarLot
 
             if (vehicles.Count > 0)
             {
+
+                
                 foreach (Vehicle vehicle in vehicles)
                 {
                     String vehicleClass = vehicle.GetType().Name;
                     formattedString += locationInInventory + " -- " + vehicleClass + " -- " + vehicle.VehicleData() + "\n";
                     locationInInventory++;
                 }
-                return formattedString.Trim();
+                return "Dealer: " + dealerName + "\n" + formattedString.Trim();
             }
             else
             {
