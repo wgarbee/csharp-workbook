@@ -29,9 +29,6 @@ namespace week1_practice1
             Console.WriteLine("There are {0} inches in {1} yard(s)", inches, yards);
             Console.ReadKey();
             Console.Clear();
-
-            Boolean people = true;
-            Boolean f = false;
             
             decimal num = 0.0M;
             decimal prod = 0.0M;
