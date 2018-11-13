@@ -82,10 +82,9 @@ namespace CarLot
                 Console.WriteLine("What type of vehicle is this? Car[C] / Truck[T] / Motorcycle[M]");
                 String type = Console.ReadLine().ToLower();
             
-                if (type == "c")
+                if (type == "c" || type == "car")
                 {
                     String carType;
-                    // bool validCar;
                     do
                     {
                         Console.WriteLine("Is this a sedan[S], coupe[C], or hatchback[H]?");
@@ -98,18 +97,15 @@ namespace CarLot
                         else
                         {
                             Console.WriteLine("Vehicle added to inventory!");
-                            // validCar = true;
                         }
                     }while (!valid);
 
                     Vehicle newVehicle = new Car(make, model, color, carType);
-                    // valid = true;
                     return newVehicle;
                 }
-                else if (type == "t")
+                else if (type == "t" || type == "truck")
                 {
                     String truckType;
-                    // bool validTruck;
                     do
                     {
                         Console.WriteLine("Is this a light[L] or heavy[H] duty truck?");
@@ -127,10 +123,9 @@ namespace CarLot
                     }while (!valid);
                     
                     Vehicle newVehicle = new Truck(make, model, color, truckType);
-                    // valid = true;
                     return newVehicle;
                 }
-                else if (type == "m")
+                else if (type == "m" || type == "motorcycle")
                 {
                     String motorcycleType;
                     do
@@ -150,7 +145,6 @@ namespace CarLot
                     } while (!valid);
 
                     Vehicle newVehicle = new Motorcycle(make, model, color, motorcycleType);
-                    // valid = true;
                     return newVehicle;
                 }
                 else if (!valid)
@@ -159,7 +153,6 @@ namespace CarLot
                 }
             } while (!valid);
 
-            // Vehicle newVehicle = new Vehicle(make, model, color);
             return null;
         }
 
@@ -218,7 +211,7 @@ namespace CarLot
                 foreach (Vehicle vehicle in vehicles)
                 {
                     String vehicleClass = vehicle.GetType().Name;
-                    formattedString += locationInInventory + " -- " + vehicleClass + " -- " + vehicle.ToString() + "\n";
+                    formattedString += locationInInventory + " -- " + vehicleClass + " -- " + vehicle.VehicleData() + "\n";
                     locationInInventory++;
                 }
                 return formattedString.Trim();
@@ -249,10 +242,9 @@ namespace CarLot
             this.numberOfWheels = numberOfWheels;
         }
 
-        public override String ToString()
+        public override String VehicleData()
         {
-            String formattedString = $"Make: {make}   Model: {model}   Color: {color}   Has {numberOfWheels} wheels.";
-            return formattedString;
+            return formattedString = $"Make: {make}   Model: {model}   Color: {color}   Number of wheels: {numberOfWheels}";
         }
     }
 
@@ -280,13 +272,12 @@ namespace CarLot
             else
             {
                 this.carType = carType;
-                this.vehicleType = this.carType;
             }
         }
 
-        public String GetVehicleType()
+        public override String VehicleData()
         {
-            return vehicleType;
+            return base.VehicleData() + $"   Car type: {carType}";
         }
     }
 
@@ -295,8 +286,6 @@ namespace CarLot
     {
         private String truckType;
 
-        public String vehicleType { get; private set; }
-        
         public Truck(String make, String model, String color, String truckType) : base (make, model, color, 4)
         {
             if (truckType == "l")
@@ -310,8 +299,12 @@ namespace CarLot
             else
             {
                 this.truckType = truckType;
-                this.vehicleType = this.truckType;
             }
+        }
+
+        public override String VehicleData()
+        {
+            return base.VehicleData() + $"   Truck type: {truckType}";
         }
     }
 
@@ -319,8 +312,6 @@ namespace CarLot
     public class Motorcycle : Vehicle
     {
         private String motorcycleType;
-
-        public String vehicleType { get; private set; }
 
         public Motorcycle(String make, String model, String color, String motorcycleType) : base (make, model, color, 2)
         {
@@ -335,8 +326,12 @@ namespace CarLot
             else
             {
                 this.motorcycleType = motorcycleType;
-                this.vehicleType = this.motorcycleType;
             }
+        }
+
+        public override String VehicleData()
+        {
+            return base.VehicleData() + $"   Motorcycle type: {motorcycleType}";
         }
     }
 }
