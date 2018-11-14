@@ -14,7 +14,7 @@ namespace TowersOfHanoi
 
     class Game
     {
-        Dictionary<Tower, Block> gameboard;
+        Dictionary<String, Tower> gameboard;
 
         
 
