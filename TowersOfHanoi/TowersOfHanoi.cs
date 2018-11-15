@@ -19,59 +19,92 @@ namespace TowersOfHanoi
         public Game()
         {
             gameboard = new Dictionary<String, Tower>();
-            return;
+
+            gameboard.Add("A", new Tower(4));
+            gameboard.Add("B", new Tower());
+            gameboard.Add("C", new Tower());
         }
 
         public void StartGame()
         {
-            bool won = false;
-            CreateGameBoard();
+            // bool won = false;
 
-            while (!won)
-            {
-                DrawGameBoard();
-                won = true;
-            }
+            Console.WriteLine(DrawGameBoard());
+
+            // while (!won)
+            // {
+
+            // }
         }
+
+        // public String DrawGameBoard()
+        // {
+        //     Console.WriteLine("Is it working?");
+        //     String formattedString = "";
+        //     foreach (String tower in gameboard.Keys)
+        //     {
+        //         formattedString += tower + ": ";
+
+        //         foreach (Tower column in gameboard.Values)
+        //         {
+        //             formattedString += column + "\n";
+        //         }
+        //     }
+        //     return formattedString;
+        // }
 
         public String DrawGameBoard()
         {
             String formattedString = "";
-            foreach (String tower in gameboard.Keys)
-            {
-                formattedString += tower + ": ";
 
-                foreach (Tower row in gameboard.Values)
-                {
-                    formattedString += row + "\n";
-                }
+            foreach (String key in gameboard.Keys)
+            {
+                formattedString += key + ": " + gameboard[key].ToString() + "\n";
             }
             return formattedString;
-        }
-
-        public void CreateGameBoard()
-        {
-            gameboard = new Dictionary<String, Tower>();
-
-            Tower towerA = new Tower();
         }
     }
 
     class Tower
     {
         Stack<Block> blocks;
+        public Tower(int numberOfBlocks)
+        {
+            blocks = new Stack<Block>();
+            for (int i = numberOfBlocks; i > 4; i--)
+            {
+                blocks.Push(new Block(i));
+            }
+        }
+
         public Tower()
         {
             blocks = new Stack<Block>();
+        }
+
+        public override String ToString()
+        {
+            String formattedString = "";
+            foreach (Block block in blocks)
+            {
+                formattedString += block.block;
+            }
+
+            return formattedString;
         }
     }
 
     class Block
     {
-        public String block;
-        public Block(String block)
+        public int block;
+        public Block(int block)
         {
             this.block = block;
+        }
+
+        public Block()
+        {
+
         }
     }
 }
