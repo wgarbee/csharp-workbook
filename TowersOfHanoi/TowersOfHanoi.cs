@@ -16,16 +16,16 @@ namespace TowersOfHanoi
     {
         Dictionary<String, Tower> gameboard;
 
-        
-
         public Game()
         {
+            gameboard = new Dictionary<String, Tower>();
             return;
         }
 
         public void StartGame()
         {
             bool won = false;
+            CreateGameBoard();
 
             while (!won)
             {
@@ -34,15 +34,26 @@ namespace TowersOfHanoi
             }
         }
 
-        public void DrawGameBoard()
+        public String DrawGameBoard()
         {
-            // Console.WriteLine("A: ");
-            // Console.WriteLine("B: ");
-            // Console.WriteLine("C: ");
-            // foreach (Tower tower in gameboard.Keys)
-            // {
-            //     Console.WriteLine(tower + ": ");
-            // }
+            String formattedString = "";
+            foreach (String tower in gameboard.Keys)
+            {
+                formattedString += tower + ": ";
+
+                foreach (Tower row in gameboard.Values)
+                {
+                    formattedString += row + "\n";
+                }
+            }
+            return formattedString;
+        }
+
+        public void CreateGameBoard()
+        {
+            gameboard = new Dictionary<String, Tower>();
+
+            Tower towerA = new Tower();
         }
     }
 
@@ -51,15 +62,16 @@ namespace TowersOfHanoi
         Stack<Block> blocks;
         public Tower()
         {
-            
+            blocks = new Stack<Block>();
         }
     }
 
     class Block
     {
-        public Block()
+        public String block;
+        public Block(String block)
         {
-
+            this.block = block;
         }
     }
 }
