@@ -125,16 +125,20 @@ namespace TowersOfHanoi
             String towerSelect;
             do
             {
+                // towerMove is different depending on whether this is the first or second call of GetUserInput in the 
+                // do-while loop this is called from.
                 Console.WriteLine($"Please enter the tower letter (A / B / C) you would like to move {towerMove}: ");
                 towerSelect = Console.ReadLine().ToUpper();
 
+                // If the input is valid and the user wants to pick up from a tower that has one or more blocks
                 if ((towerSelect == "A" || towerSelect == "B" || towerSelect == "C") && gameboard[towerSelect].blocks.Count != 0)
                 {
                     // Changes the towerMove to "to" so it displays when this is called a second time in the StartGame while loop
                     towerMove = "to"; 
-                }
+                }  // If the input is valid and the user wants to move the block to an empty tower
                 else if ((towerSelect == "A" || towerSelect == "B" || towerSelect == "C") && (gameboard[towerSelect].blocks.Count == 0 && towerMove == "to"))
                 {
+                    // Changes the towerMove to "to" so it displays when this is called a second time in the StartGame while loop
                     towerMove = "to";
                 }
                 else
@@ -167,21 +171,28 @@ namespace TowersOfHanoi
         //     return gameboard[towerOrigin].blocks.Pop().block;
         // }
 
-        // Takes in a block object
+        // Takes in the origin tower and destination tower. 
         public void MoveBlock(/* int block,  */String towerOrigin, String towerDestination)
         {
+            // Finds the int value of the originTower top Block object
             int originBlock = gameboard[towerOrigin].blocks.Peek().block;
 
+            // If the destination tower is empty, pop the top object from the origin tower
+            // and push it onto the the destination stack
             if (gameboard[towerDestination].blocks.Count == 0)
             {
                 Block block = gameboard[towerOrigin].blocks.Pop();
                 gameboard[towerDestination].blocks.Push(block);
                 towerMove = "from";
             }
+            // Runs if the destination tower is not empty
             else if (gameboard[towerDestination].blocks.Count != 0)
             {
+                // Finds the int value of the destinationTower top Block object
                 int destinationBlock = gameboard[towerDestination].blocks.Peek().block;
 
+                // Determines if the origin block is smaller than the top block object
+                // of the destination tower 
                 if (originBlock < destinationBlock)
                 {
                     Block block = gameboard[towerOrigin].blocks.Pop();
@@ -195,7 +206,7 @@ namespace TowersOfHanoi
             }
         }
 
-        // Check that tower C is 4 or mor blocks tall
+        // Check that tower C is 4 or more blocks
         public bool CheckForWin()
         {
             if (gameboard["C"].blocks.Count == numberOfBlocks)
