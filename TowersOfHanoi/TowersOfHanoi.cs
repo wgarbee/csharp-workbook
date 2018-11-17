@@ -221,7 +221,7 @@ namespace TowersOfHanoi
     {
         public Stack<Block> blocks { get; private set; }
 
-        // Constructor when 
+        // Constructor when an int is passed to it. Creates a tower based on the number passed to it
         public Tower(int numberOfBlocks)
         {
             blocks = new Stack<Block>();
@@ -231,11 +231,14 @@ namespace TowersOfHanoi
             }
         }
 
+        // Constructor when nothing is passed. Creates an empty tower
         public Tower()
         {
             blocks = new Stack<Block>();
         }
 
+        // ToString override to display the the contents of the Block stack in reverse order
+        // so that it displays in the correct order
         public override String ToString()
         {
             String formattedString = "";
@@ -251,16 +254,14 @@ namespace TowersOfHanoi
     class Block
     {
         public int block;
+
+        // Block object constructor when an int value is to be assigned
         public Block(int block)
         {
             this.block = block;
         }
 
-        public Block()
-        {
-
-        }
-
+        // Returns string value to of the int value
         public override String ToString()
         {
             return block.ToString();
