@@ -40,13 +40,14 @@ namespace Checkers
             }
         }
 
-        public int[] Position { get; set; }
+        // Not used as the Checkers are dumb
+        // public int[] Position { get; set; }
 
         public String Color { get; set; }
         
         public Checker()
         {
-
+            
         }
 
         public Checker(String color)
@@ -71,7 +72,7 @@ namespace Checkers
             
         }
         
-        // Creates the board, laying the checkers in their starting locations
+        // Creates the board and the Checkers, laying the Checkers in their starting locations
         public void CreateBoard()
         {
             Checker checker;
@@ -153,29 +154,36 @@ namespace Checkers
         
         public void DrawBoard()
         {
-            String formattedBoard = " 0 1 2 3 4 5 6 7" + "\n";
+            String formattedBoard = "  0 1 2 3 4 5 6 7" + "\n";
 
-            for (int r = 0; r < 8; r++)
+            for (int row = 0; row < 8; row++)
             {
-                formattedBoard += Convert.ToString(r);
-                for (int c = 0; c < 8; c++)
+                formattedBoard += Convert.ToString(row) + " ";
+
+                for (int column = 0; column < 8; column++)
                 {
-                    if (Grid[r][c] != null)
+                    if (Grid[row][column] != null)
                     {
-                        formattedBoard += Grid[r][c] + " ";
+                        if (Grid[row][column].Symbol != "")
+                        {
+                            formattedBoard += Grid[row][column] + " ";
+                        }
+                        else
+                        {
+                            formattedBoard += "  ";
+                        }
                     }
                     else
                     {
                         formattedBoard += "  ";
                     }
 
-                    if (c % 7 == 0 && c != 0)
+                    if (column % 7 == 0 && column != 0)
                     {
                         formattedBoard += "\n";
                     }
                 }
             }
-
             Console.WriteLine(formattedBoard);
         }
         
