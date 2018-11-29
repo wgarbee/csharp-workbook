@@ -195,7 +195,8 @@ namespace Checkers
             int column = Convert.ToInt32(Console.ReadLine());
 
             Checker returnedChecker = Grid[row][column];
-            Grid[row][column] = new Checker();
+            Checkers.Remove(Grid[row][column]);  // Removes this specific Checker from the list of Checkers
+            Grid[row][column] = null;
             
             return returnedChecker;
             // return Checkers.Find(x => x.Position.SequenceEqual(new List<int> { row, column }));
