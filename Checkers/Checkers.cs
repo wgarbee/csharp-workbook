@@ -7,7 +7,7 @@ namespace Checkers
     class Program
     {
 
-        static void Main(string[] args)
+        static void Main(String[] args)
         {
             Game game = new Game();
             game.StartGame();
@@ -42,10 +42,6 @@ namespace Checkers
                 }
             }
         }
-
-        // Not used as these Checkers are dumb
-        // public int[] Position { get; set; }
-
 
         public String Color { get; set; }
 
@@ -146,23 +142,23 @@ namespace Checkers
 
                 for (int column = 0; column < 8; column++)
                 {
+                    // Error catching. Runs as long as the location has a Checker object
                     if (Grid[row][column] != null)
                     {
+                        // Places a Checker in the space on the grid
                         if (Grid[row][column].Symbol != "")
                         {
                             formattedBoard += Grid[row][column] + " ";
                         }
-                        else
-                        {
-                            formattedBoard += "  ";
-                        }
                     }
                     else
                     {
+                        // If the grid space is empty, inserts an empty space in the grid.
                         formattedBoard += "  ";
                     }
 
-                    if (column % 7 == 0 && column != 0)
+                    // Adds a new line if the loop is iterating on the the 7th column
+                    if (column == 7)
                     {
                         formattedBoard += "\n";
                     }
@@ -261,6 +257,7 @@ namespace Checkers
             }
             else
             {
+                // If there is a Checker in the users destination selection
                 throw new Exception("There is a checker there.");
             }
         }
@@ -333,9 +330,8 @@ namespace Checkers
 
         public void StartGame()
         {
-            Board boardgame = new Board();
-            String color = "white";
-            Checker checker = null;
+            Board boardgame = new Board();  // New board instance
+            String color = "white";  // Starting color
             bool removedChecker;
 
             boardgame.CreateBoard();
@@ -352,7 +348,7 @@ namespace Checkers
                     int originRow = Convert.ToInt32(Console.ReadLine());
                     Console.WriteLine($"{color}, please enter a column to move from:");
                     int originColumn = Convert.ToInt32(Console.ReadLine());
-                    checker = boardgame.SelectChecker(originRow, originColumn, color);
+                    Checker checker = boardgame.SelectChecker(originRow, originColumn, color);
 
                     Console.Clear();
                     Console.WriteLine(boardgame.DrawBoard());
@@ -373,6 +369,9 @@ namespace Checkers
                     Console.Clear();
                     Console.WriteLine(boardgame.DrawBoard());
 
+                    // Checks if a Checker was removed in the turn. If there was and player hasn't won
+                    // asks the player if they can make a move by jumping another opponents Checker with
+                    // the same Checker they just played with. Then changes the player turn if they say no.
                     if (removedChecker && !boardgame.CheckForWin())
                     {
                         String userInput = "";
@@ -393,7 +392,7 @@ namespace Checkers
                                 color = "white";
                             }
                         }
-                    }
+                    }  // Changes the player turn
                     else if (!removedChecker)
                     {
                         if (color == "white")
