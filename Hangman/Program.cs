@@ -14,8 +14,6 @@ namespace Hangman
 
     class Game
     {
-        String[] words;
-
         public Game()
         {
 
@@ -23,20 +21,32 @@ namespace Hangman
 
         public void StartGame()
         {
-            String file = @"words_alpha.txt";
-            words = File.ReadAllLines(file);
-
-            int numberOfWords = words.Length;
-
-            for (int i = 0; i < 100; i++)
-            {
-                Console.WriteLine(words[i]);
-            }
+            
         }
     }
 
-    class Word
+    class Board
     {
+        String[] words;
 
+        Random randomWordLocation = new Random();
+
+        public Board()
+        {
+
+        }
+
+        public void CreateBoard()
+        {
+            String formatted
+        }
+
+        public String[] GetWords()
+        {
+            String file = @"words_alpha.txt";
+            words = File.ReadAllLines(file);
+
+            return words;
+        }
     }
 }
