@@ -6,30 +6,16 @@ namespace week8_practice11
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hi");
-            String junk = CombineColors("Fuschia", "Tangerine");
-            String primaryCombined = CombinePrimaryColors(PrimaryColors.RED, PrimaryColors.BLUE);
-            Console.WriteLine(primaryCombined);
-        }
+            String primaryCombined = "";
+            
+            primaryCombined = CombinePrimaryColors(PrimaryColors.RED, PrimaryColors.BLUE);
+            Console.WriteLine($"{ PrimaryColors.RED } and { PrimaryColors.BLUE } is { primaryCombined }");
 
-        static String CombineColors(String color1, String color2)
-        {
-            if (color1 == "RED")
-            {
-                if (color2 == "YELLOW")
-                {
-                    return "ORANGE";
-                }
-                else if (color2 == "BLUE")
-                {
-                    return "PURPLE";
-                }
-                else
-                {
-                    return "RED";
-                }
-            }
-            return null;
+            primaryCombined = CombinePrimaryColors(PrimaryColors.YELLOW, PrimaryColors.RED);
+            Console.WriteLine($"{ PrimaryColors.YELLOW } and { PrimaryColors.RED } is { primaryCombined }");
+
+            primaryCombined = CombinePrimaryColors(PrimaryColors.BLUE, PrimaryColors.YELLOW);
+            Console.WriteLine($"{ PrimaryColors.BLUE } and { PrimaryColors.YELLOW } is { primaryCombined }");
         }
 
         public static String CombinePrimaryColors(PrimaryColors color1, PrimaryColors color2)
@@ -51,11 +37,33 @@ namespace week8_practice11
             }
             else if (color1 == PrimaryColors.YELLOW)
             {
-                // all checks
+                if (color2 == PrimaryColors.BLUE)
+                {
+                    return "GREEN";
+                }
+                else if (color2 == PrimaryColors.RED)
+                {
+                    return "ORANGE";
+                }
+                else
+                {
+                    return "YELLOW";
+                }
             }
             else if (color1 == PrimaryColors.BLUE)
             {
-                // all checks
+                if (color2 == PrimaryColors.RED)
+                {
+                    return "PURPLE";
+                }
+                else if (color2 == PrimaryColors.YELLOW)
+                {
+                    return "GREEN";
+                }
+                else
+                {
+                    return "BLUE";
+                }
             }
 
             return null;
