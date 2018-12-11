@@ -1,0 +1,9 @@
+create table toys (id int, name varchar(100), price float, stock int);
+insert into toys values (1, 'Car', 5.00, 40);
+select * from toys;
+alter table toys add column department_id;
+insert into toys values (2, 'GI Joe', 10.00, 40, 101);
+update toys set department_id = 101 where id =1;
+create table departments (id int, name varchar(100));
+insert into departments values (101, 'Toys');
+select * from toys join departments on toys.department_id = departments.id;
