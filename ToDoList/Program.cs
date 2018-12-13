@@ -26,8 +26,6 @@ namespace ToDoList
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hi!");
-
             ToDoController ToDoListProgram = new ToDoController();
 
             ToDoListProgram.MainController();
@@ -38,7 +36,7 @@ namespace ToDoList
     {
         public List<ToDo> ToDos { get; set; }
 
-        public ToDo taskItem;
+        public ToDo taskItem { get; set; }
 
         public static int taskNumber = 1;
 
@@ -81,11 +79,11 @@ namespace ToDoList
         public String ListTasks()
         {
             String formattedList = "";
-            int longestTaskName = taskItem.task.Length;
-            int longestTaskTag = taskItem.tag.Length;
-            String taskEmptySpaces = "";
-            String tagEmptySpaces = "";
+            int longestTaskName = ToDos.First().task.Length;
+            int longestTaskTag = ToDos.First().tag.Length;
+            int spacesNeeded;
 
+            // Finds the longest task name length
             foreach (ToDo task in ToDos)
             {
                 if (task.task.Length > longestTaskName)
@@ -94,48 +92,72 @@ namespace ToDoList
                 }
             }
 
+            // Finds the longest task tag length
             foreach (ToDo task in ToDos)
             {
-                if (taskItem.tag.Length > longestTaskTag)
+                if (task.tag.Length > longestTaskTag)
                 {
-                    longestTaskTag = taskItem.tag.Length;
+                    longestTaskTag = task.tag.Length;
                 }
             }
 
-            formattedList += " ID |  Task  ";
+            // Builds the header string
+            formattedList += " ID | Task" + new string(' ', longestTaskName) + "| Tag" + new string(' ', longestTaskTag) + "| Status      | Created Date" + "\n";
+            int headerLength = formattedList.Length;
 
-            for (int i = 0; i < longestTaskName; i++)
-            {
-                taskEmptySpaces += " ";
-                formattedList += " ";
-            }
-
-            formattedList += "|  Tag  ";
-
-            for (int i = 0; i < longestTaskTag; i++)
-            {
-                tagEmptySpaces += " ";
-                formattedList += " ";
-            }
-
-            formattedList += "|  Status    |  Created Date\n";
-
-            for (int i = 0; i < (longestTaskName + longestTaskTag + 55); i++)
+            // Builds the line below the header
+            for (int i = 0; i < headerLength; i++)
             {
                 formattedList += "-";
             }
 
             formattedList += "\n";
 
+            // Loops through the list of ToDo task objects
             foreach (ToDo task in ToDos)
             {
-                formattedList += " " + task.id + "  |  " + task.task + taskEmptySpaces + "  |  " + task.tag + tagEmptySpaces + "  |  " + task.status + "  |  " + task.createdDate + "\n";
+                // Adds the task ID
+                formattedList += " " + task.id;
+                formattedList += task.id < 10 ? "  |" : " |";  // If the id is less than 10, adds 2 spaces, else 1 and then a pipe
+
+                // If the task is longest, adds to the string with 4 extra spaces
+                if (task.task.Length == longestTaskName)
+                {
+                    formattedList += " " + task.task + new string(' ', 4) + "|";
+                }
+                else  // If shorter than longest, determines how many spaces are needed to continue to build table
+                {
+                    spacesNeeded = longestTaskName - task.task.Length;
+                    formattedList += " " + task.task + new string(' ', spacesNeeded + 4) + "|";
+                }
+
+                // If the tag is longest, adds to the string with 4 extra spaces
+                if (task.tag.Length == longestTaskTag)
+                {
+                    formattedList += " " + task.tag + new string(' ', 3) + "|";
+                }
+                else  // If shorter than longest, determines how many spaces are needed to continue to build table
+                {
+                    spacesNeeded = longestTaskTag - task.tag.Length;
+                    formattedList += " " + task.tag + new string(' ', spacesNeeded + 3) + "|";
+                }
+
+                // Continues to construct the string based on whether the status is incomplete...
+                if (task.status == ToDoStatus.INCOMPLETE)
+                {
+                    formattedList += " " + task.status + "  |  " + task.createdDate + "\n";
+                }
+                else  // ...or complete
+                {
+                    formattedList += " " + task.status + "    |  " + task.createdDate + "\n";
+                }
             }
 
             return formattedList;
         }
     }
 
+    // ToDo POCO with properties 
     public class ToDo
     {
         public String task { get; set; }
@@ -163,10 +185,10 @@ namespace ToDoList
         }
     }
 
-    // This controlls the accessing and passing of data around the program
+    // This controlls the accessing and passing of data from the List (eventually db) to the user/console
     public class ToDoController
     {
-        public ToDoDAOInMemory dao { get; set; }
+        public IDAO dao { get; set; }
 
         public ConsoleView newConsole { get; set; }
 
@@ -214,6 +236,8 @@ namespace ToDoList
                 }
 
             }while(menuSelection != 6);
+
+            Console.Clear();
         }
     }
 
@@ -224,6 +248,7 @@ namespace ToDoList
 
         }
 
+        // Displays the main menu
         public int MainMenu()
         {
             Console.Clear();
@@ -240,6 +265,7 @@ namespace ToDoList
             return Convert.ToInt32(Console.ReadLine());
         }
 
+        // Adds a task description/name
         public String AddTaskDescription()
         {
             Console.Clear();
@@ -247,13 +273,14 @@ namespace ToDoList
             return Console.ReadLine();
         }
 
+        // Adds a task tag
         public String AddTaskTag()
         {
-            // Console.Clear();
             Console.WriteLine("Please enter a task tag:");
             return Console.ReadLine();
         }
 
+        // Displays a formatted view of the list of tasks
         public void ListTasks(String list)
         {
             Console.Clear();
@@ -263,6 +290,7 @@ namespace ToDoList
             Console.ReadLine();
         }
 
+        // Prompts to delete a task ID provided by user
         public int DeleteTask()
         {
             Console.Clear();
@@ -270,6 +298,7 @@ namespace ToDoList
             return Convert.ToInt32(Console.ReadLine());
         }
 
+        // Prompts to update the status of a task ID provided by user
         public int MarkComplete()
         {
             Console.Clear();
@@ -277,6 +306,7 @@ namespace ToDoList
             return Convert.ToInt32(Console.ReadLine());
         }
 
+        // Can be called to print a message that's passed to it
         public void PrintMessage(String message)
         {
             Console.WriteLine(message);
