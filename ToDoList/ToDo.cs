@@ -1,23 +1,15 @@
 ﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Threading;
-using Microsoft.EntityFrameworkCore;
 
 namespace ToDoList
 {
-    public enum ToDoStatus
-    {
-        COMPLETE,
-        INCOMPLETE
-    }
-
     class Program
     {
         static void Main(string[] args)
         {
+            // Instantiates the ToDo list program
             ToDoController ToDoListProgram = new ToDoController();
 
+            // Calls the MainController method on the TDLP instance
             ToDoListProgram.MainController();
         }
     }

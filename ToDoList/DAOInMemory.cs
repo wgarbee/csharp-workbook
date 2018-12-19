@@ -149,5 +149,10 @@ namespace ToDoList
         {
             return "";
         }
+
+        public String ListCompletedTasks()
+        {
+            return "";
+        }
     }
 }

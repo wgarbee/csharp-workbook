@@ -2,6 +2,7 @@ using System;
 
 namespace ToDoList
 {
+    // DAO interface
     public interface IDAO
     {
         void Add(String description, String tag);
@@ -17,5 +18,7 @@ namespace ToDoList
         String ListTasks();
 
         String ListTasksByTag(String Tag);
+
+        String ListCompletedTasks();
     }
 }

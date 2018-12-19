@@ -19,7 +19,8 @@ namespace ToDoList
             Console.WriteLine("5. Update task name");
             Console.WriteLine("6. Update task tag");
             Console.WriteLine("7. List by task tag");
-            Console.WriteLine("8. Exit");
+            Console.WriteLine("8. List completed tasks");
+            Console.WriteLine("9. Exit");
             
             return Convert.ToInt32(Console.ReadLine());
         }
@@ -84,6 +85,15 @@ namespace ToDoList
             Console.Clear();
             Console.WriteLine("What tag do you want to filter by?");
             return Console.ReadLine().ToLower();
+        }
+
+        public static void ListCompletedTasks(String list)
+        {
+            Console.Clear();
+            Console.WriteLine(list);
+
+            Console.WriteLine("Press enter to return to the main menu.");
+            Console.ReadLine();
         }
 
         // Can be called to print a message that's passed to it
